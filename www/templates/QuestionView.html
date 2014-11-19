@@ -1,0 +1,23 @@
+<ion-view class="">
+    <ion-content class="has-header">
+        <ion-nav-buttons class="" side="right">
+            <button class="button button-icon icon ion-fireball"
+                    ng-click="qvCtrl.$ionicNavBarDelegate.back()">Exit
+            </button>
+        </ion-nav-buttons>
+        <div class="list">
+            <div class="text-center">
+                <strong>
+                    <span class="item-text-wrap" style="font-size: 30px" ng-bind="qvCtrl.question"></span>
+                </strong>
+            </div>
+        </div>
+        <ion-list class="list">
+            <ion-item class="" ng-repeat="answer in qvCtrl.answers">
+                <button class="button button-full button-positive">
+                    {{answer}}
+                </button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
