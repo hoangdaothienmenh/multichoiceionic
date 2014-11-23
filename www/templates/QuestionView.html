@@ -23,11 +23,11 @@
     </ion-content>
 </ion-view>
 -->
-<ion-view title="Page">
+<ion-view class="view">
     <ion-content padding="true" class="has-header">
         <ion-nav-buttons class="" side="right">
             <button class="button button-icon icon ion-fireball"
-                    ng-click="qvCtrl.$ionicNavBarDelegate.back()">Exit
+                    ng-click="qvCtrl.showStats()">Exit
             </button>
         </ion-nav-buttons>
         <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
@@ -35,9 +35,19 @@
             <p ng-bind="qvCtrl.question" style="font-size: 30px; font-family: 'Indie Flower';"></p>
         </div>
         <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
-        <ion-list>
-            <ion-checkbox ng-repeat="answer in qvCtrl.answers" style="font-family: 'Indie Flower';">{{answer}}</ion-checkbox>
+        <ion-list class="list">
+            <label class="item item-checkbox" ng-repeat="answer in qvCtrl.answers">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="qvCtrl.answered[$index]">
+                </label>
+                <strong>{{answer}}</strong>
+            </label>
         </ion-list>
-        <button class="button button-positive button-block" ng-click="">OK</button>
+        <div ng-hide="qvCtrl.isAnswered">
+            <button class="button button-positive button-block" ng-click="qvCtrl.check()">Prüfen</button>
+        </div>
+        <div ng-show="qvCtrl.isAnswered">
+            <button class="button button-positive button-block" ng-click="qvCtrl.next()">Nächste Frage</button>
+        </div>
     </ion-content>
 </ion-view>

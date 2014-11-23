@@ -1,10 +1,10 @@
 angular.module('mctrainer').factory('Question',
     function () {
 
-        var Question = function (question, answers, rightAnswer) {
-            this.question = question;
-            this.answers = answers;
-            this.rightAnswer = rightAnswer;
+        var Question = function (question, answers, keyAnswer) {
+            this.question = question; //Frage
+            this.answers = answers; //Antworten
+            this.keyAnswer = keyAnswer; //Lösungsschlüssel
         };
         return Question;
     });

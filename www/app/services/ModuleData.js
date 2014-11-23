@@ -5,6 +5,7 @@ angular.module('mctrainer').service('ModuleData',
             var modules = localStorage.getItem('modules');
             var questions = [];
             var answers = [];
+            var key = [];
             if (!modules) {
                 modules = [];
                 // add some test data
@@ -12,7 +13,8 @@ angular.module('mctrainer').service('ModuleData',
                 answers.push("Angela Merkel");
                 answers.push("Angelino Mertes");
                 answers.push("Gerhard Schröder");
-                questions.push(new Question('Wie heißt die jetzige Bundeskanzlerin?', answers, "Angela Merkel"));
+                key.push(false, true, false, true);
+                questions.push(new Question('Wer war kein Bundeskanzler/in?', answers, key));
                 modules.push(new Module('Ausbildereignung', questions));
                 modules.push(new Module('Führerschein', questions));
                 modules.push(new Module('Klausurvorbereitung', questions));
