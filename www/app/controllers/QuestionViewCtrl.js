@@ -51,10 +51,10 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
         } else {
 
         }
-    }
+    };
 
     this.nextQuestion = function () {
-        $state.go($state.current, {name: $stateParams.name}, {reload: true});
+        $state.go($state.current, {name: $stateParams.name}, {reload: true, inherit: false});
     }
 
 });
