@@ -1,9 +1,14 @@
 angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
     $ionicNavBarDelegate.setTitle($stateParams.name);
     var questions = ModuleData.findByName($stateParams.name);
-    this.question = questions.questions[0].question;
-    this.answers = questions.questions[0].answers;
-    var key = questions.questions[0].keyAnswer;
+
+    // Bildet Zufallszahl aus der Länge der Fragen
+    var randomIndex = Math.round(Math.random(questions.length));
+    console.log(randomIndex);
+    this.question = questions.questions[randomIndex].question;
+    this.answers = questions.questions[randomIndex].answers;
+    var key = questions.questions[randomIndex].keyAnswer;
+
     this.isAnswered = false;
     this.answered = {};
     var isCorrect = false;
