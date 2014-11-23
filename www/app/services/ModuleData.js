@@ -8,12 +8,11 @@ angular.module('mctrainer').service('ModuleData',
             if (!modules) {
                 modules = [];
                 // add some test data
-                answers.push("166cm");
-                answers.push("176cm");
-                answers.push("186cm");
-                answers.push("196cm");
-                questions.push(new Question('Wie groß du?', answers));
-                questions.push(new Question('Wie klein du?', answers));
+                answers.push("Angelo Merte");
+                answers.push("Angela Merkel");
+                answers.push("Angelino Mertes");
+                answers.push("Gerhard Schröder");
+                questions.push(new Question('Wie heißt die jetzige Bundeskanzlerin?', answers, "Angela Merkel"));
                 modules.push(new Module('Ausbildereignung', questions));
                 modules.push(new Module('Führerschein', questions));
                 modules.push(new Module('Klausurvorbereitung', questions));

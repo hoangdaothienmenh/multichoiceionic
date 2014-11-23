@@ -1,3 +1,4 @@
+<!--
 <ion-view class="">
     <ion-content class="has-header">
         <ion-nav-buttons class="" side="right">
@@ -19,5 +20,24 @@
                 </button>
             </ion-item>
         </ion-list>
+    </ion-content>
+</ion-view>
+-->
+<ion-view title="Page">
+    <ion-content padding="true" class="has-header">
+        <ion-nav-buttons class="" side="right">
+            <button class="button button-icon icon ion-fireball"
+                    ng-click="qvCtrl.$ionicNavBarDelegate.back()">Exit
+            </button>
+        </ion-nav-buttons>
+        <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
+        <div class="text-center">
+            <p ng-bind="qvCtrl.question" style="font-size: 30px; font-family: 'Indie Flower';"></p>
+        </div>
+        <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
+        <ion-list>
+            <ion-checkbox ng-repeat="answer in qvCtrl.answers" style="font-family: 'Indie Flower';">{{answer}}</ion-checkbox>
+        </ion-list>
+        <button class="button button-positive button-block" ng-click="">OK</button>
     </ion-content>
 </ion-view>
