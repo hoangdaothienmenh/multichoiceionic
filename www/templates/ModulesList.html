@@ -11,7 +11,7 @@
             <ion-item ng-repeat="module in mlCtrl.modules" href="#/modules/{{module.name}}">
                 {{module.name}}
                 <small style="color: grey;">({{module.questions.length}})</small>
-                <ion-option-button class="button button-calm" ng-click="" href="#/modules/">
+                <ion-option-button class="button button-calm" ng-click="mlCtrl.showStats()">
                     Statistik
                 </ion-option-button>
             </ion-item>

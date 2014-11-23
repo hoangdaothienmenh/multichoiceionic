@@ -4,7 +4,6 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
 
     // Bildet Zufallszahl aus der Länge der Fragen
     var randomIndex = Math.round(Math.random(questions.length));
-    console.log(randomIndex);
     this.question = questions.questions[randomIndex].question;
     this.answers = questions.questions[randomIndex].answers;
     var key = questions.questions[randomIndex].keyAnswer;
@@ -53,4 +52,9 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
 
         }
     }
+
+    this.nextQuestion = function () {
+        $state.go($state.current, {name: $stateParams.name}, {reload: true});
+    }
+
 });

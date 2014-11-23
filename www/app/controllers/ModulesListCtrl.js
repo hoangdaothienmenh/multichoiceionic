@@ -9,4 +9,8 @@ angular.module('mctrainer').controller('ModulesListCtrl', function ($scope, $sta
     }).then(function (popover) {
         $scope.popover = popover;
     })
+
+    this.showStats = function () {
+        alert("Stats TODO");
+    };
 });
