@@ -15,6 +15,7 @@ angular.module('mctrainer').service('ModuleData',
                 answers.push("Gerhard Schröder");
                 key.push(false, true, false, true);
                 questions.push(new Question('Wer war jemals Bundeskanzler/in?', answers, key));
+                key = [];
                 key.push(true, false, true, false);
                 questions.push(new Question('Wer war kein Bundeskanzler/in?', answers, key));
                 modules.push(new Module('Ausbildereignung', questions));

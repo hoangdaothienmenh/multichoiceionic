@@ -11,6 +11,7 @@ angular.module('mctrainer').controller('ModulesListCtrl', function ($scope, $sta
     })
 
     this.showStats = function () {
+        //TODO
         alert("Stats TODO");
     };
 });

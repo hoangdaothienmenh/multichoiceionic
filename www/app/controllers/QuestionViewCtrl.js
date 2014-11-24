@@ -7,10 +7,10 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
     this.question = questions.questions[randomIndex].question;
     this.answers = questions.questions[randomIndex].answers;
     var key = questions.questions[randomIndex].keyAnswer;
-
+    this.checked = key;
     this.isAnswered = false;
     this.answered = {};
-    var isCorrect = false;
+    this.isCorrect = false;
 
     // Checkboxwerte auf false initialisieren
     for (var i = 0; i < this.answers.length; i++) {
@@ -29,32 +29,29 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
     };
 
     this.check = function () {
-        var stop = true, i = 0;
+        var stop = true;
         this.isAnswered = true;
+        var tempCorrect = false;
 
-
-        while (stop) {   // prüft ob Eingabe dem Lösungsschlüssel übereinstimmt
-            if (key[i] != this.answered[i]) {
-                stop = false;
-                isCorrect = false;
-            } else {
-                isCorrect = true;
+        for (var i = 0 ; i< key.length;i++){ // prüft ob Eingabe dem Lösungsschlüssel übereinstimmt
+            if (key[i] != this.answered[i]){
+                tempCorrect = false;
+                break;
+            }else{
+                tempCorrect = true;
             }
-            if (i == key.length) {
-                stop = false;
-            }
-            i++;
         }
+        this.isCorrect = tempCorrect; //setzt Haken bei den richtigen Antworten
 
-        if (isCorrect) {
-
+        if (this.isCorrect) {
+            //TODO
         } else {
-
+            //TODO
         }
     };
 
     this.nextQuestion = function () {
-        $state.go($state.current, {name: $stateParams.name}, {reload: true, inherit: false});
+        $state.go($state.current, {name: $stateParams.name}, {reload: true});
     }
 
 });
