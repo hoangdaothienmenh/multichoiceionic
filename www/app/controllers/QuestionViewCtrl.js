@@ -7,10 +7,12 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
     this.question = questions.questions[randomIndex].question;
     this.answers = questions.questions[randomIndex].answers;
     var key = questions.questions[randomIndex].keyAnswer;
-    this.checked = key;
+    this.checked = {};
     this.isAnswered = false;
     this.answered = {};
-    this.isCorrect = false;
+    this.isCorrect = key;
+    var answeredCorrect = false;
+
 
     // Checkboxwerte auf false initialisieren
     for (var i = 0; i < this.answers.length; i++) {
@@ -30,9 +32,18 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
 
     this.check = function () {
         var stop = true;
-        this.isAnswered = true;
         var tempCorrect = false;
 
+        for (var i = 0;i < key.length;i++){
+            if (this.answered[i]){
+                this.checked[i]= true;
+            }else if (key[i]){
+                this.checked[i] = true;
+            }else{
+                this.checked[i] = false;
+            }
+        }
+        this.isAnswered = true;
         for (var i = 0 ; i< key.length;i++){ // prüft ob Eingabe dem Lösungsschlüssel übereinstimmt
             if (key[i] != this.answered[i]){
                 tempCorrect = false;
@@ -41,9 +52,10 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
                 tempCorrect = true;
             }
         }
-        this.isCorrect = tempCorrect; //setzt Haken bei den richtigen Antworten
-
-        if (this.isCorrect) {
+        answeredCorrect = tempCorrect; //setzt Haken bei den richtigen Antworten
+        console.log(answeredCorrect);
+        console.log(this.checked);
+        if (answeredCorrect) {
             //TODO
         } else {
             //TODO

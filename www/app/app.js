@@ -10,8 +10,11 @@ angular.module('mctrainer', ['ionic'])
                 url: '/modules/:name',
                 templateUrl: 'templates/QuestionView.html',
                 controller: 'QuestionViewCtrl as qvCtrl'
-            }
-        );
+            }).state('details',{
+                url: '/modules/details/:name',
+                templateUrl: 'templates/DetailsView.html',
+                controller: 'DetailsViewCtrl as dvCtrl'
+            });
 
         $urlRouterProvider.otherwise('/modules');
     })

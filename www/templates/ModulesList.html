@@ -11,8 +11,8 @@
             <ion-item ng-repeat="module in mlCtrl.modules" href="#/modules/{{module.name}}">
                 {{module.name}}
                 <small style="color: grey;">({{module.questions.length}})</small>
-                <ion-option-button class="button button-calm" ng-click="mlCtrl.showStats()">
-                    Statistik
+                <ion-option-button class="button button-energized icon-right ion-android-archive" ng-click="mlCtrl.goDetails($index)">
+                    Details
                 </ion-option-button>
             </ion-item>
         </ion-list>
@@ -23,8 +23,8 @@
     <ion-popover-view>
         <ion-list>
             <ion-item class="item-icon-left"
-                      ng-click="popover.hide()">
-                <i class="icon ion-arrow-down-a"></i>
+                      ng-click="mlCtrl.openModal();popover.hide();">
+                <i class="icon icon-left ion-android-book"></i>
                 Module laden
             </ion-item>
         </ion-list>

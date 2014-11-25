@@ -1,0 +1,30 @@
+<ion-modal-view>
+
+    <div class="bar bar-header bar-energized">
+        <h1 class="title">Module</h1>
+        <button class="button button-icon icon ion-ios7-close-empty"
+                ng-click="modal.hide()">
+
+        </button>
+    </div>
+
+    <ion-content class="has-header">
+        <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+                <input type="text" placeholder="Search" ng-model="searchQuery">
+            </label>
+            <button class="button button-clear"
+                    style="min-height: inherit; line-height: inherit;"
+                    ng-click="searchQuery=''" ng-show="searchQuery">Cancel
+            </button>
+        </div>
+        <ion-list>
+            <ion-item class="item-text-wrap"
+                      ng-repeat="module in filteredModules =
+                      (modules | filter:searchQuery | orderBy:'name')"
+                      ng-click="moduleSelected(module)">
+                {{module.name}} ({{module.questions.length}})
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-modal-view>
