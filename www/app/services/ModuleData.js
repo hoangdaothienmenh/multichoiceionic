@@ -1,36 +1,59 @@
 angular.module('mctrainer').service('ModuleData',
-    function (Module, Question) {
+    function ($firebase, FIREBASE_URL, Module, Question) {
 
-        this.findAll = function () {
-            var modules = localStorage.getItem('modules');
-            var questions = [];
-            var answers = [];
-            var key = [];
-            if (!modules) {
-                modules = [];
-                // add some test data
-                answers.push("Angelo Merte");
-                answers.push("Angela Merkel");
-                answers.push("Angelino Mertes");
-                answers.push("Gerhard Schröder");
-                key.push(false, true, false, true);
-                questions.push(new Question('Wer war jemals Bundeskanzler/in?', answers, key));
-                key = [];
-                key.push(true, false, true, false);
-                questions.push(new Question('Wer war kein Bundeskanzler/in?', answers, key));
-                modules.push(new Module('Ausbildereignung', questions));
-                modules.push(new Module('Führerschein', questions));
-                modules.push(new Module('Klausurvorbereitung', questions));
-                modules.push(new Module('Allgemeinwissen', questions));
-                localStorage.setItem('modules', JSON.stringify(modules));
-            } else {
-                modules = JSON.parse(modules);
-            }
-            return modules;
+        var rootRef = new Firebase(FIREBASE_URL);
+        var usersRef = rootRef.child('users');
+        var modulesRef = rootRef.child('modules');
+        var rootRefAngular = $firebase(rootRef);
+        var modulesRefAngular = $firebase(modulesRef);
+        var usersRefAngular = $firebase(usersRef);
+        var id = localStorage.getItem('userid');
+        var userModulesRef;
+
+        if (!id) { // Falls keine ID im localstorage vorhanden wird eine erstellt und gesetzt.
+            var d = new Date();
+            id = d.getTime() + "-" + Math.floor(Math.random() * 1000000000000);
+            localStorage.setItem('userid', id);
+            initUser();
+        } else {
+            userModulesRef = $firebase(usersRef.child(id).child("modules"));
+        }
+
+
+        function initUser() { // falls ID noch nicht in Datenbank vorhanden, wird diese hier initialisiert.
+            var data = {modules: "empty", statistic: "empty"};
+            usersRefAngular.$set(id, data).then(function (ref) {
+                userModulesRef = $firebase(usersRef.child(id).child("modules"));
+            }, function (error) {
+                console.log("Error:", error);
+            });
+        }
+
+        this.getModules = function () { // holt die Module die Angeboten wurden.
+            return modulesRefAngular.$asArray();
         };
 
-        this.findByName = function (name) {
-            var modules = this.findAll();
+        this.getUserModules = function () { // holt die Module die der Benutzer ausgewählt hat.
+            return userModulesRef.$asArray();
+        };
+
+        this.addModuleToUser = function (module) { // Fügt ausgewähltes Modul zum Benutzerkatalog hinzu.
+            userModulesRef.$asArray().$add(module);
+        };
+
+        /*
+         this.getModulesById = function (id) {
+         return this.getModules().$getRecord(id);
+         };
+         */
+
+        this.removeModule = function (id) { // entfernt ein Module vom User
+            var modules = this.getUserModules();
+            modules.$remove(modules.$getRecord(id));
+        };
+
+        this.findByName = function (name) { //
+            var modules = this.getUserModules();
             var question;
 
             modules.forEach(function (ele) {

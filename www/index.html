@@ -20,14 +20,20 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
+    <script src="lib/firebase/firebase.js"></script>
+    <script src="lib/angularfire/dist/angularfire.min.js"></script>
+
+
     <!-- your app's js -->
     <script src="app/app.js"></script>
+    <script src="app/config.js"></script>
     <script src="app/controllers/QuestionViewCtrl.js"></script>
     <script src="app/controllers/ModulesListCtrl.js"></script>
     <script src="app/controllers/DetailsViewCtrl.js"></script>
     <script src="app/models/Module.js"></script>
     <script src="app/models/Question.js"></script>
     <script src="app/services/ModuleData.js"></script>
+
 </head>
 
 <body ng-app="mctrainer">
