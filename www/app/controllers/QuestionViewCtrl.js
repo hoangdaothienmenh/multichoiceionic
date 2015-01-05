@@ -1,20 +1,39 @@
-angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope,$timeout,$ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
-    $timeout(function (){
+angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $timeout, $ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
+    $timeout(function () {
         $ionicNavBarDelegate.title($stateParams.name);
-    },600);
+    }, 600);
 
+    function shuffle(array) { // Funktion zum mischen der Antworten
+        var currentIndex = array.length, temporaryValue, randomIndex ;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
 
     var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
 
     // Bildet Zufallszahl aus der Länge der Fragen
-    var randomIndex = Math.round(Math.random(module.questions.length));
+    var index = 0;
 
-    this.question = module.questions[randomIndex].question;  // Anzeige der Frage
-    this.answers = Object.keys(module.questions[randomIndex].answers); //Array der Antworten
+    this.question = module.questions[index].question;  // Anzeige der Frage
+
+    this.answers = shuffle(Object.keys(module.questions[index].answers)); //Array der Antworten
     this.checked = {};  // Var zum Setzen der Haken der Checkboxen
     this.isAnswered = false; // Var für Status ob Frage beantwortet wurde oder nicht.
     this.answered = {}; // Var für die Antworten des Benutzers
-    var initKeyAnswer = module.questions[randomIndex].answers; // Antworten als anwort:boolean
+    var initKeyAnswer = module.questions[index].answers; // Antworten als anwort:boolean
     this.isCorrect = []; // Array der richtigen Antworten als boolean
     var answeredCorrect = false; // Var ob richtig geantwortet wurde.
 
@@ -42,11 +61,11 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope,$tim
         this.isAnswered = true;
 
         for (var i = 0; i < this.answers.length; i++) {
-            if (this.answered[i]){
-                this.checked[i]= true;
+            if (this.answered[i]) {
+                this.checked[i] = true;
             } else if (this.isCorrect[i]) {
                 this.checked[i] = true;
-            }else{
+            } else {
                 this.checked[i] = false;
             }
         }
@@ -56,7 +75,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope,$tim
             if (this.isCorrect[i] != this.answered[i]) {
                 tempCorrect = false;
                 break;
-            }else{
+            } else {
                 tempCorrect = true;
             }
         }
@@ -70,21 +89,30 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope,$tim
     };
     var that = this;
     this.nextQuestion = function () { // Funktion die nach dem Prüfen per Button zur nächsten Frage wechselt
-        randomIndex = Math.round(Math.random(module.questions.length));
 
-        that.question = module.questions[randomIndex].question;  // Anzeige der Frage
-        that.answers = Object.keys(module.questions[randomIndex].answers); //Array der Antworten
-        that.checked = {};  // Var zum Setzen der Haken der Checkboxen
-        that.isAnswered = false; // Var für Status ob Frage beantwortet wurde oder nicht.
-        that.answered = {}; // Var für die Antworten des Benutzers
-        initKeyAnswer = module.questions[randomIndex].answers; // Antworten als anwort:boolean
-        that.isCorrect = []; // Array der richtigen Antworten als boolean
-        answeredCorrect = false; // Var ob richtig geantwortet wurde.
+        if (index == module.questions.length-1) {
+            $ionicPopup.alert({
+                title: 'Statistik dieser Lernrunde',
+                template: 'Anzahl der beantworteten Fragen: ' + '<br>' +
+                'Richtig beantwortet: ' + '<br>' +
+                'Quote: '
+            }).then(function () {
+                $ionicHistory.goBack();
+            });
+        } else {
+            index++;
+            that.question = module.questions[index].question;  // Anzeige der Frage
+            that.answers = Object.keys(module.questions[index].answers); //Array der Antworten
+            that.checked = {};  // Var zum Setzen der Haken der Checkboxen
+            that.isAnswered = false; // Var für Status ob Frage beantwortet wurde oder nicht.
+            initKeyAnswer = module.questions[index].answers; // Antworten als anwort:boolean
+            answeredCorrect = false; // Var ob richtig geantwortet wurde.
 
-        // (Checkboxwerte auf false/ Lösungschlüssel)  initialisieren -------
-        for (var i = 0; i < that.answers.length; i++) {
-            that.answered[i] = false;
-            that.isCorrect[i] = initKeyAnswer[that.answers[i]];
+            // (Checkboxwerte auf false/ Lösungschlüssel)  initialisieren -------
+            for (var i = 0; i < that.answers.length; i++) {
+                that.answered[i] = false;
+                that.isCorrect[i] = initKeyAnswer[that.answers[i]];
+            }
         }
     }
 
