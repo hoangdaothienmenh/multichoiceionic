@@ -1,5 +1,5 @@
 angular.module('mctrainer').controller('DetailsViewCtrl', function ($scope, $state,$stateParams, ModuleData, $ionicNavBarDelegate) {
-    $ionicNavBarDelegate.setTitle($stateParams.name);
+    $ionicNavBarDelegate.title($stateParams.name);
     var questions = ModuleData.findByName($stateParams.name).questions;
     this.questions = questions;
     this.answers = questions.answers;

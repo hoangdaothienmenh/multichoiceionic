@@ -1,6 +1,7 @@
 'use strict';
-angular.module('mctrainer').controller('ModulesListCtrl', function ($scope, $state, $ionicPopover, $ionicModal, ModuleData, $ionicNavBarDelegate, $ionicPopup) {
-    $ionicNavBarDelegate.setTitle('MC-Trainer');
+angular.module('mctrainer').controller('ModulesListCtrl',
+        function ($scope, $state, $ionicPopover, $ionicModal, ModuleData, $ionicNavBarDelegate, $ionicPopup) {
+    $ionicNavBarDelegate.title('MC-Trainer');
 
     this.modules = ModuleData.getUserModules();
 

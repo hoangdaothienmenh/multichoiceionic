@@ -1,5 +1,5 @@
 angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
-    $ionicNavBarDelegate.setTitle($stateParams.name);
+    $ionicNavBarDelegate.title($stateParams.name);
     var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
 
     // Bildet Zufallszahl aus der Länge der Fragen
