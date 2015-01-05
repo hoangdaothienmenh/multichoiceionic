@@ -1,12 +1,10 @@
-<ion-view title="MC-Trainer">
-    <ion-content>
-        <ion-nav-buttons side="right">
-            <button class="button button-icon icon ion-navicon-round"
-                    ng-click="popover.show($event)">
-
-            </button>
-        </ion-nav-buttons>
-
+<ion-view view-title="MC-Trainer">
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon icon ion-navicon-round"
+                ng-click="popover.show($event)">
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
         <ion-list>
             <ion-item ng-repeat="module in mlCtrl.modules" href="#/modules/{{module.name}}">
                 {{module.name}}
