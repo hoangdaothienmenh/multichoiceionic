@@ -1,4 +1,4 @@
-<ion-view view-title="MC-Trainer">
+<ion-view cache-view="false">
     <ion-nav-buttons side="secondary">
         <button class="button button-icon icon ion-navicon-round"
                 ng-click="popover.show($event)">
@@ -9,7 +9,8 @@
             <ion-item ng-repeat="module in mlCtrl.modules" href="#/modules/{{module.name}}">
                 {{module.name}}
                 <small style="color: grey;">({{module.questions.length}})</small>
-                <ion-option-button class="button button-energized icon-right ion-android-archive" ng-click="mlCtrl.goDetails($index)">
+                <ion-option-button class="button button-energized icon-right ion-android-archive"
+                                   ng-click="mlCtrl.goDetails($index)">
                     Details
                 </ion-option-button>
             </ion-item>

@@ -1,5 +1,9 @@
-angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
-    $ionicNavBarDelegate.title($stateParams.name);
+angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope,$timeout,$ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
+    $timeout(function (){
+        $ionicNavBarDelegate.title($stateParams.name);
+    },600);
+
+
     var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
 
     // Bildet Zufallszahl aus der Länge der Fragen
@@ -29,7 +33,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
             'Richtig beantwortet: ' + '<br>' +
             'Quote: '
         }).then(function () {
-            $ionicNavBarDelegate.back();
+            $ionicHistory.goBack();
         });
     };
 
@@ -64,9 +68,24 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $st
             //TODO
         }
     };
-
+    var that = this;
     this.nextQuestion = function () { // Funktion die nach dem Prüfen per Button zur nächsten Frage wechselt
-        $state.go($state.current, {name: $stateParams.name}, {reload: true});
+        randomIndex = Math.round(Math.random(module.questions.length));
+
+        that.question = module.questions[randomIndex].question;  // Anzeige der Frage
+        that.answers = Object.keys(module.questions[randomIndex].answers); //Array der Antworten
+        that.checked = {};  // Var zum Setzen der Haken der Checkboxen
+        that.isAnswered = false; // Var für Status ob Frage beantwortet wurde oder nicht.
+        that.answered = {}; // Var für die Antworten des Benutzers
+        initKeyAnswer = module.questions[randomIndex].answers; // Antworten als anwort:boolean
+        that.isCorrect = []; // Array der richtigen Antworten als boolean
+        answeredCorrect = false; // Var ob richtig geantwortet wurde.
+
+        // (Checkboxwerte auf false/ Lösungschlüssel)  initialisieren -------
+        for (var i = 0; i < that.answers.length; i++) {
+            that.answered[i] = false;
+            that.isCorrect[i] = initKeyAnswer[that.answers[i]];
+        }
     }
 
 });

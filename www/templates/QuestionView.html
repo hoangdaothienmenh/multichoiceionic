@@ -1,10 +1,10 @@
-<ion-view class="view">
-    <ion-content  class="has-header">
-        <ion-nav-buttons class="" side="right">
-            <button class="button button-icon icon-right ion-close"
-                    ng-click="qvCtrl.showStats()">Exit
-            </button>
-        </ion-nav-buttons>
+<ion-view cache-view="false">
+    <ion-nav-buttons class="" side="right">
+        <button class="button button-icon icon-right ion-close"
+                ng-click="qvCtrl.showStats()">Exit
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
         <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
         <div class="text-center">
             <p ng-bind="qvCtrl.question" style="font-size: 30px; font-family: 'Architects Daughter'"></p>
@@ -15,10 +15,11 @@
                 <label class="checkbox checkbox-balanced" ng-show="qvCtrl.isAnswered" ng-if="qvCtrl.isCorrect[$index]">
                     <input type="checkbox" ng-checked="qvCtrl.checked[$index]">
                 </label>
-                <label class="checkbox checkbox-assertive"   ng-show="qvCtrl.isAnswered" ng-if="!qvCtrl.isCorrect[$index]">
+                <label class="checkbox checkbox-assertive" ng-show="qvCtrl.isAnswered"
+                       ng-if="!qvCtrl.isCorrect[$index]">
                     <input type="checkbox" ng-checked="qvCtrl.checked[$index]">
                 </label>
-                <label class="checkbox checkbox-energized"  ng-hide="qvCtrl.isAnswered">
+                <label class="checkbox checkbox-energized" ng-hide="qvCtrl.isAnswered">
                     <input type="checkbox" ng-model="qvCtrl.answered[$index]">
                 </label>
 
@@ -26,10 +27,14 @@
             </label>
         </ion-list>
         <div ng-hide="qvCtrl.isAnswered">
-            <button class="button button-energized button-block icon-right ion-android-lightbulb" ng-click="qvCtrl.check()">Prüfen</button>
+            <button class="button button-energized button-block icon-right ion-android-lightbulb"
+                    ng-click="qvCtrl.check()">Prüfen
+            </button>
         </div>
         <div ng-show="qvCtrl.isAnswered">
-            <button class="button button-energized button-block icon-right ion-chevron-right"  ng-click="qvCtrl.nextQuestion()">Nächste Frage</button>
+            <button class="button button-energized button-block icon-right ion-chevron-right"
+                    ng-click="qvCtrl.nextQuestion()">Nächste Frage
+            </button>
         </div>
     </ion-content>
 </ion-view>
