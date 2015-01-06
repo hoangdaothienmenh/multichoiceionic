@@ -1,50 +1,44 @@
 angular.module('mctrainer').service('ModuleData',
-    function ($firebase, FIREBASE_URL, $timeout, $ionicLoading) {
+    function ($firebase, FIREBASE_URL, Module, Question) {
 
         var rootRef = new Firebase(FIREBASE_URL);
         var usersRef = rootRef.child('users');
         var modulesRef = rootRef.child('modules');
-        var modules = $firebase(modulesRef).$asArray();
+        var rootRefAngular = $firebase(rootRef);
+        var modulesRefAngular = $firebase(modulesRef);
         var usersRefAngular = $firebase(usersRef);
-        var allUsers = $firebase(usersRef).$asArray();
-        var userID = localStorage.getItem('userid');
-        var userModules;
-        var userStatistics;
+        var id = localStorage.getItem('userid');
+        var userModulesRef;
 
-        if (!userID) { // Falls keine ID im localstorage vorhanden wird eine erstellt und gesetzt.
-            userID = new Date().getTime() + "-" + Math.floor(Math.random() * 1000000000000);
-            localStorage.setItem('userid', userID);
-            initUser().then(function() {
-                initData();
-            });
+        if (!id) { // Falls keine ID im localstorage vorhanden wird eine erstellt und gesetzt.
+            var d = new Date();
+            id = d.getTime() + "-" + Math.floor(Math.random() * 1000000000000);
+            localStorage.setItem('userid', id);
+            initUser();
         } else {
-            initData();
+            userModulesRef = $firebase(usersRef.child(id).child("modules"));
         }
 
-        function initData() {
-            userModules = $firebase(usersRef.child(userID).child("modules")).$asArray();
-            userStatistics = $firebase(usersRef.child(userID).child("statistic")).$asArray();
+
+        function initUser() { // falls ID noch nicht in Datenbank vorhanden, wird diese hier initialisiert.
+            var data = {modules: "empty", statistic: "empty"};
+            usersRefAngular.$set(id, data).then(function (ref) {
+                userModulesRef = $firebase(usersRef.child(id).child("modules"));
+            }, function (error) {
+                console.log("Error:", error);
+            });
         }
 
-        /**
-         * Falls die UserID noch nicht im Localstorage vorhanden ist, wird diese hier initialisiert.
-         */
-        function initUser() {
-            var data = {modules: '', statistic: ''};
-            return usersRefAngular.$set(userID, data);
-        }
-
-        this.getModules = function() { // holt die Module die angeboten wurden.
-            return modules;
+        this.getModules = function () { // holt die Module die Angeboten wurden.
+            return modulesRefAngular.$asArray();
         };
 
-        this.getUserModules = function() { // holt die Module die der Benutzer ausgewählt hat.
-            return userModules;
+        this.getUserModules = function () { // holt die Module die der Benutzer ausgewählt hat.
+            return userModulesRef.$asArray();
         };
 
-        this.addModuleToUser = function(module) { // Fügt ausgewähltes Modul zum Benutzerkatalog hinzu.
-            userModules.$add(module);
-            userStatistics.$add({moduleID: module.$id, questions_answered: 0, correct_answers: 0});
+        this.addModuleToUser = function (module) { // Fügt ausgewähltes Modul zum Benutzerkatalog hinzu.
+            userModulesRef.$asArray().$add(module);
         };
 
         /*
@@ -53,12 +47,12 @@ angular.module('mctrainer').service('ModuleData',
          };
          */
 
-        this.removeModule = function(id) { // entfernt ein Module vom User
+        this.removeModule = function (id) { // entfernt ein Module vom User
             var modules = this.getUserModules();
             modules.$remove(modules.$getRecord(id));
         };
 
-        this.findByName = function(name) {
+        this.findByName = function (name) { //
             var modules = this.getUserModules();
             var question;
 
@@ -69,18 +63,5 @@ angular.module('mctrainer').service('ModuleData',
                 }
             });
             return question;
-        };
-
-        this.questionAnswered = function(moduleID, answerCorrect) {
-            userStatistics.forEach(function (el) {
-                if (el.moduleID == moduleID) {
-                    var item = userStatistics.$getRecord(el.$id);
-                    item.questions_answered += 1;
-                    if (answerCorrect)
-                        item.correct_answers += 1;
-                    userStatistics.$save(item);
-                    return;
-                }
-            });
-        };
+        }
     });
