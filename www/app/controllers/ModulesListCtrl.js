@@ -1,10 +1,15 @@
 'use strict';
 angular.module('mctrainer').controller('ModulesListCtrl',
-    function ($scope, $state,$timeout, $ionicPopover, $ionicModal, ModuleData, $ionicNavBarDelegate, $ionicPopup) {
+    function ($scope, $state,$timeout, $ionicPopover, $ionicModal, ModuleData, $ionicNavBarDelegate, $ionicPopup,$ionicLoading) {
+        var that = this;
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
         $timeout(function () {
             $ionicNavBarDelegate.title('MC-Trainer');
+            $ionicLoading.hide();
         }, 600);
-        this.modules = ModuleData.getUserModules();
+        that.modules = ModuleData.getUserModules();
 
         $ionicPopover.fromTemplateUrl('popover.html', {
             scope: $scope
