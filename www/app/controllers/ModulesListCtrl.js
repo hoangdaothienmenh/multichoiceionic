@@ -1,12 +1,13 @@
 'use strict';
 angular.module('mctrainer').controller('ModulesListCtrl',
-    function ($scope, $state,$timeout, $ionicPopover, $ionicModal, ModuleData, $ionicNavBarDelegate, $ionicPopup,$ionicLoading) {
+    function ($scope, $state, $timeout, $ionicPopover, $ionicModal, ModuleData, $ionicNavBarDelegate, $ionicPopup, $ionicLoading) {
         var that = this;
         $ionicLoading.show({
             template: 'Loading...'
         });
         $timeout(function () {
             $ionicNavBarDelegate.title('MC-Trainer');
+
             $ionicLoading.hide();
         }, 600);
         that.modules = ModuleData.getUserModules();
@@ -34,29 +35,34 @@ angular.module('mctrainer').controller('ModulesListCtrl',
             $scope.modal.show();
         };
 
-        var thisCtrl = this;
         $scope.moduleSelected = function (module) {
             var copy = false;
             var oldModule;
-            for (var i = 0; i < thisCtrl.modules.length; i++) {
-                if (thisCtrl.modules[i].name == module.name) {
-                    copy = true;
-                    oldModule = thisCtrl.modules[i];
-                }
-            }
-            if (copy) {
-                $ionicPopup.confirm({
-                    title: 'Das Modul ist schon vorhanden wollen sie es überschreiben?'
-                    + '<br><small>' + 'Achtung die Statistik dieses Moduls wird zurückgesetzt!' + '</small>'
-                }).then(function (res) {
-                    if (res) {
-                        ModuleData.removeModule(oldModule.$id);
-                        ModuleData.addModuleToUser(module);
-                        $scope.modal.hide();
+            if (typeof that.modules !== 'undefined') {
+                for (var i = 0; i < that.modules.length; i++) {
+                    if (thisCtrl.modules[i].name == module.name) {
+                        copy = true;
+                        oldModule = thisCtrl.modules[i];
                     }
-                });
+                }
+                if (copy) {
+                    $ionicPopup.confirm({
+                        title: 'Das Modul ist schon vorhanden wollen sie es überschreiben?'
+                        + '<br><small>' + 'Achtung die Statistik dieses Moduls wird zurückgesetzt!' + '</small>'
+                    }).then(function (res) {
+                        if (res) {
+                            ModuleData.removeModule(oldModule.$id);
+                            ModuleData.addModuleToUser(module);
+                            $scope.modal.hide();
+                        }
+                    });
+                } else {
+                    ModuleData.addModuleToUser(module);
+                    that.modules = ModuleData.getUserModules();
+                }
             } else {
                 ModuleData.addModuleToUser(module);
+                that.modules = ModuleData.getUserModules();
             }
             $scope.modal.hide();
         };
