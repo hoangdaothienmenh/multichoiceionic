@@ -40,9 +40,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         this.isAnswered = true;
 
         for (var i = 0; i < this.answers.length; i++) {
-            if (this.answered[i]) {
-                this.checked[i] = true;
-            } else if (this.isCorrect[i]) {
+            if (this.answered[i] || this.isCorrect[i]) {
                 this.checked[i] = true;
             } else {
                 this.checked[i] = false;
@@ -62,7 +60,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         answeredCorrect = tempCorrect; //setzt Haken bei den richtigen Antworten
 
 
-        ModuleData.questionAnswered(module.moduleID, answeredCorrect);
+        ModuleData.questionAnswered(module.moduleID, answeredCorrect, index);
     };
     var that = this;
     this.nextQuestion = function () { // Funktion die nach dem Prüfen per Button zur nächsten Frage wechselt
@@ -99,32 +97,13 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
     };
 
     /**
-     * Shuffle an array
+     * Shuffle an array.
      * From http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
      *
      * @param array
      * @returns shuffled array
      */
-    function shuffle(array) { // Funktion zum mischen der Antworten
-        var currentIndex = array.length, temporaryValue, randomIndex ;
-
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-
-        return array;
-    }
-
-    function shuffle(array) { // Funktion zum mischen der Antworten
+    function shuffle(array) {
         var currentIndex = array.length, temporaryValue, randomIndex ;
 
         // While there remain elements to shuffle...

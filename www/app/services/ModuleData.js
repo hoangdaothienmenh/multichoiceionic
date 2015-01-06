@@ -1,15 +1,15 @@
 angular.module('mctrainer').service('ModuleData',
-    function ($firebase, FIREBASE_URL, $timeout, $ionicLoading) {
+    function ($firebase, FIREBASE_URL) {
 
         var rootRef = new Firebase(FIREBASE_URL);
         var usersRef = rootRef.child('users');
         var modulesRef = rootRef.child('modules');
         var modules = $firebase(modulesRef).$asArray();
         var usersRefAngular = $firebase(usersRef);
-        var allUsers = $firebase(usersRef).$asArray();
+        //var allUsers = $firebase(usersRef).$asArray();
         var userID = localStorage.getItem('userid');
         var userModules;
-        var userStatistics, userQuestionStatistics;
+        var userStatistics;
 
         if (!userID) { // Falls keine ID im localstorage vorhanden wird eine erstellt und gesetzt.
             userID = new Date().getTime() + "-" + Math.floor(Math.random() * 1000000000000);
@@ -43,13 +43,19 @@ angular.module('mctrainer').service('ModuleData',
         };
 
         this.addModuleToUser = function (module) { // Fügt ausgewähltes Modul zum Benutzerkatalog hinzu.
-            userModules.$add(module);
-            var test;
-            var questionid  = Object.keys[module.questions];
-            userStatistics.$add({moduleID: module.$id, questions_answered: 0, correct_answers: 0,questions:questionid});
-            for (var i=0;i<module.questions.length;i++){
-                test = Object.
-            }
+            console.log(module.questions);
+            userModules.$add(module).then(function () {
+                var questionid = module.questions;
+                for (var i = 0; i < module.questions.length; i++) {
+                    questionid[i] = 0;
+                }
+                userStatistics.$add({
+                    moduleID: module.$id,
+                    questions_answered: 0,
+                    correct_answers: 0,
+                    questions: questionid
+                });
+            });
         };
 
         /*
@@ -65,7 +71,7 @@ angular.module('mctrainer').service('ModuleData',
 
         this.findByName = function (name) {
             var modules = this.getUserModules();
-            var question;
+            var question = "";
 
             modules.forEach(function (ele) {
 
@@ -76,15 +82,19 @@ angular.module('mctrainer').service('ModuleData',
             return question;
         };
 
-        this.questionAnswered = function (moduleID, answerCorrect) {
+        this.questionAnswered = function (moduleID, answerCorrect, questionID) {
+            console.log(questionID);
             userStatistics.forEach(function (el) {
                 if (el.moduleID == moduleID) {
                     var item = userStatistics.$getRecord(el.$id);
                     item.questions_answered += 1;
-                    if (answerCorrect)
+                    if (answerCorrect) {
                         item.correct_answers += 1;
+                        item.questions[questionID] += 1;
+                    } else {
+                        item.questions[questionID] = 0;
+                    }
                     userStatistics.$save(item);
-                    return;
                 }
             });
         };
