@@ -45,7 +45,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
     //-------------------------------------------------------------------
 
     // zeigt Stats an, wird am Ende oder bei vorzeitigem Beenden aufgerufen.
-    this.showStats = function () {
+    this.showStats = function() {
         $ionicPopup.alert({
             title: 'Statistik dieser Lernrunde',
             template: 'Anzahl der beantworteten Fragen: ' + '<br>' +
@@ -53,6 +53,16 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
             'Quote: '
         }).then(function () {
             $ionicHistory.goBack();
+        });
+    };
+
+    this.showAllStats = function() {
+        var stats = ModuleData.getStatsForModule(module.moduleID);
+        $ionicPopup.alert({
+            title: 'Statistik aller Lernrunden',
+            template: 'Anzahl der beantworteten Fragen: ' + stats.questions_answered + '<br>' +
+            'Richtig beantwortet: ' + stats.correct_answers +
+                    ' (' + Math.floor((stats.correct_answers / stats.questions_answered) * 100) + '%)'
         });
     };
 
