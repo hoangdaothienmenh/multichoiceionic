@@ -14,19 +14,17 @@ angular.module('mctrainer').service('ModuleData',
             var d = new Date();
             id = d.getTime() + "-" + Math.floor(Math.random() * 1000000000000);
             localStorage.setItem('userid', id);
-            initUser();
-        } else {
+            initUser().then(function (ref) {
+                userModulesRef = $firebase(usersRef.child(id).child("modules"));
+            });
+        }else {
             userModulesRef = $firebase(usersRef.child(id).child("modules"));
         }
 
 
         function initUser() { // falls ID noch nicht in Datenbank vorhanden, wird diese hier initialisiert.
             var data = {modules: "empty", statistic: "empty"};
-            usersRefAngular.$set(id, data).then(function (ref) {
-                userModulesRef = $firebase(usersRef.child(id).child("modules"));
-            }, function (error) {
-                console.log("Error:", error);
-            });
+            return usersRefAngular.$set(id, data);
         }
 
         this.getModules = function () { // holt die Module die Angeboten wurden.
