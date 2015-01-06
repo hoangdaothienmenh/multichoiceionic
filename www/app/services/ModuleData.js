@@ -1,5 +1,5 @@
 angular.module('mctrainer').service('ModuleData',
-    function ($firebase, FIREBASE_URL, $timeout, $ionicLoading) {
+    function ($firebase, FIREBASE_URL, Module, Question) {
 
         var rootRef = new Firebase(FIREBASE_URL);
         var usersRef = rootRef.child('users');
@@ -14,9 +14,7 @@ angular.module('mctrainer').service('ModuleData',
             var d = new Date();
             id = d.getTime() + "-" + Math.floor(Math.random() * 1000000000000);
             localStorage.setItem('userid', id);
-            initUser().then(function () {
-                userModulesRef = $firebase(usersRef.child(id).child("modules"));
-            });
+            initUser();
         } else {
             userModulesRef = $firebase(usersRef.child(id).child("modules"));
         }
@@ -24,7 +22,11 @@ angular.module('mctrainer').service('ModuleData',
 
         function initUser() { // falls ID noch nicht in Datenbank vorhanden, wird diese hier initialisiert.
             var data = {modules: "empty", statistic: "empty"};
-            return usersRefAngular.$set(id, data);
+            usersRefAngular.$set(id, data).then(function (ref) {
+                userModulesRef = $firebase(usersRef.child(id).child("modules"));
+            }, function (error) {
+                console.log("Error:", error);
+            });
         }
 
         this.getModules = function () { // holt die Module die Angeboten wurden.
