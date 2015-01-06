@@ -83,4 +83,14 @@ angular.module('mctrainer').service('ModuleData',
                 }
             });
         };
+
+        this.getStatsForModule = function(moduleID) {
+            var item = null;
+            userStatistics.forEach(function (el) {
+                if (el.moduleID == moduleID) {
+                    item = userStatistics.$getRecord(el.$id);
+                }
+            });
+            return item;
+        };
     });
