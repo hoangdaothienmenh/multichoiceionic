@@ -58,11 +58,13 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
 
     this.showAllStats = function() {
         var stats = ModuleData.getStatsForModule(module.moduleID);
+        var percent = stats.questions_answered == 0 ? 0 :
+            Math.floor((stats.correct_answers / stats.questions_answered) * 100);
         $ionicPopup.alert({
             title: 'Statistik aller Lernrunden',
             template: 'Anzahl der beantworteten Fragen: ' + stats.questions_answered + '<br>' +
             'Richtig beantwortet: ' + stats.correct_answers +
-                    ' (' + Math.floor((stats.correct_answers / stats.questions_answered) * 100) + '%)'
+                    ' (' + percent + '%)'
         });
     };
 
