@@ -4,12 +4,11 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
     }, 600);
 
     var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
-
     // Bildet Zufallszahl aus der Länge der Fragen
     var index = 0;
-
+    var stats = ModuleData.getStatsForModule(module.moduleID);
+    console.log(stats);
     this.question = module.questions[index].question;  // Anzeige der Frage
-
     this.answers = shuffle(Object.keys(module.questions[index].answers)); //Array der Antworten
     this.checked = {};  // Var zum Setzen der Haken der Checkboxen
     this.isAnswered = false; // Var für Status ob Frage beantwortet wurde oder nicht.
@@ -23,18 +22,6 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         this.answered[i] = false;
         this.isCorrect[i] = initKeyAnswer[this.answers[i]];
     }
-
-    // zeigt Stats an, wird am Ende oder bei vorzeitigem Beenden aufgerufen.
-    this.showStats = function() {
-        $ionicPopup.alert({
-            title: 'Statistik dieser Lernrunde',
-            template: 'Anzahl der beantworteten Fragen: ' + '<br>' +
-            'Richtig beantwortet: ' + '<br>' +
-            'Quote: '
-        }).then(function () {
-            $ionicHistory.goBack();
-        });
-    };
 
     this.showAllStats = function() {
         var stats = ModuleData.getStatsForModule(module.moduleID);
@@ -137,4 +124,22 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         return array;
     }
 
+    function shuffle(array) { // Funktion zum mischen der Antworten
+        var currentIndex = array.length, temporaryValue, randomIndex ;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
 });

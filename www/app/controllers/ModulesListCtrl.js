@@ -40,9 +40,9 @@ angular.module('mctrainer').controller('ModulesListCtrl',
             var oldModule;
             if (typeof that.modules !== 'undefined') {
                 for (var i = 0; i < that.modules.length; i++) {
-                    if (thisCtrl.modules[i].name == module.name) {
+                    if (that.modules[i].name == module.name) {
                         copy = true;
-                        oldModule = thisCtrl.modules[i];
+                        oldModule = that.modules[i];
                     }
                 }
                 if (copy) {
@@ -53,6 +53,7 @@ angular.module('mctrainer').controller('ModulesListCtrl',
                         if (res) {
                             ModuleData.removeModule(oldModule.$id);
                             ModuleData.addModuleToUser(module);
+                            console.log(module.questions);
                             $scope.modal.hide();
                         }
                     });

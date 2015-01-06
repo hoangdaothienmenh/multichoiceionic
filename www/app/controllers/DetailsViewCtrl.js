@@ -15,7 +15,6 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($ionicModal,
         this.answers = Object.keys(q.answers);
 
         for (var i = 0; i < this.answers.length; i++) {
-            console.log(this.answers[i]);
             this.isCorrect[i] = q.answers[this.answers[i]];
         }
 
