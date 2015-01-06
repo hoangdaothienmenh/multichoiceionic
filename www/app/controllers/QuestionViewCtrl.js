@@ -81,11 +81,8 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         }
         answeredCorrect = tempCorrect; //setzt Haken bei den richtigen Antworten
 
-        if (answeredCorrect) {
-            //TODO
-        } else {
-            //TODO
-        }
+
+        ModuleData.questionAnswered(module.moduleID, answeredCorrect);
     };
     var that = this;
     this.nextQuestion = function () { // Funktion die nach dem Prüfen per Button zur nächsten Frage wechselt
