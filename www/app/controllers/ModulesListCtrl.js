@@ -53,6 +53,7 @@ angular.module('mctrainer').controller('ModulesListCtrl',
             } else {
                 ModuleData.addModuleToUser(module);
             }
+            $scope.modal.hide();
         };
 
         // Funktion zum Übergang von der Modulliste zur Detailansicht eines Moduls
