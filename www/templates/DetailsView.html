@@ -1,9 +1,8 @@
 <ion-view class="view" cache-view="false">
-    <ion-content class="has-header">
-
+    <ion-content>
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
-                <input type="text" placeholder="Search" ng-model="dvCtrl.searchQuery">
+                <input type="text" placeholder="Suchen" ng-model="dvCtrl.searchQuery">
             </label>
         </div>
 
@@ -15,10 +14,9 @@
             </ion-item>
         </ion-list>
         <label>
-            <button class="button button-assertive" style="align-self: auto" ng-click="dvCtrl.resetData()">
+            <button class="button button-assertive" style="align-self: auto" ng-click="dvCtrl.resetStats()">
                 Statistik zurücksetzen
             </button>
         </label>
-
     </ion-content>
 </ion-view>

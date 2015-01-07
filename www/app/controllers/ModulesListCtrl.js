@@ -1,7 +1,7 @@
 'use strict';
 angular.module('mctrainer').controller('ModulesListCtrl',
     function ($scope, $state, $timeout, $ionicPopover, $ionicModal, ModuleData, $ionicNavBarDelegate, $ionicPopup, $ionicLoading) {
-        $ionicNavBarDelegate.title("Menü");
+        $ionicNavBarDelegate.title("Home");
         var that = this;
         $ionicLoading.show({
             template: 'Loading...'
@@ -11,12 +11,6 @@ angular.module('mctrainer').controller('ModulesListCtrl',
         }, 500);
         that.modules = ModuleData.getUserModules();
 
-        $ionicPopover.fromTemplateUrl('popover.html', {
-            scope: $scope
-        }).then(function (popover) {
-            $scope.popover = popover;
-        });
-
         $ionicModal.fromTemplateUrl('templates/ModuleSearchModal.html', {
             scope: $scope,
             animation: 'slide-in-up',
@@ -25,12 +19,12 @@ angular.module('mctrainer').controller('ModulesListCtrl',
             $scope.modal = modal;
         });
 
-        this.openModal = function () {
+        this.openModal = function() {
             $scope.modules = ModuleData.getModules();
             $scope.modal.show();
         };
 
-        $scope.moduleSelected = function (module) {
+        $scope.moduleSelected = function(module) {
             var copy = false;
             var oldModule;
             if (typeof that.modules !== 'undefined') {
@@ -43,7 +37,7 @@ angular.module('mctrainer').controller('ModulesListCtrl',
                 if (copy) {
                     $ionicPopup.confirm({
                         title: 'Das Modul ist schon vorhanden. Soll es überschrieben werden?'
-                        + '<br><small>' + 'Achtung die Statistik dieses Moduls wird zurückgesetzt!' + '</small>'
+                        + '<br><small>' + 'Achtung: Die Statistik dieses Moduls wird zurückgesetzt!' + '</small>'
                     }).then(function (res) {
                         if (res) {
                             ModuleData.removeModule(oldModule.$id);
@@ -65,7 +59,7 @@ angular.module('mctrainer').controller('ModulesListCtrl',
         /**
          * Funktion zum Übergang von der Modulliste zur Detailansicht eines Moduls
          */
-        this.goDetails = function (index) {
+        this.goDetails = function(index) {
             $state.go('details', {name: this.modules[index].name});
         }
 

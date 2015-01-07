@@ -6,7 +6,6 @@ angular.module('mctrainer').service('ModuleData',
         var modulesRef = rootRef.child('modules');
         var modules = $firebase(modulesRef).$asArray();
         var usersRefAngular = $firebase(usersRef);
-        //var allUsers = $firebase(usersRef).$asArray();
         var userID = localStorage.getItem('userid');
         var userModules;
         var userStatistics;
@@ -21,6 +20,9 @@ angular.module('mctrainer').service('ModuleData',
             initData();
         }
 
+        /**
+         * Initialisiert die Benutzerdaten
+         */
         function initData() {
             userModules = $firebase(usersRef.child(userID).child("modules")).$asArray();
             userStatistics = $firebase(usersRef.child(userID).child("statistic")).$asArray();
@@ -34,15 +36,26 @@ angular.module('mctrainer').service('ModuleData',
             return usersRefAngular.$set(userID, data);
         }
 
-        this.getModules = function () { // holt die Module die angeboten wurden.
+        /**
+         * Array mit den Modulen, die angeboten werden
+         */
+        this.getModules = function () {
             return modules;
         };
 
-        this.getUserModules = function () { // holt die Module die der Benutzer ausgewählt hat.
+        /**
+         * Array mit den Modulen, die der Benutzer ausgewählt hat
+         * @returns {*}
+         */
+        this.getUserModules = function () {
             return userModules;
         };
 
-        this.addModuleToUser = function (module) { // Fügt ausgewähltes Modul zum Benutzerkatalog hinzu.
+        /**
+         * Fügt das ausgewählte Modul zum Benutzerkatalog hinzu
+         * @param module
+         */
+        this.addModuleToUser = function (module) {
             userModules.$add(module).then(function () {
                 var questionid = module.questions;
                 for (var i = 0; i < module.questions.length; i++) {
@@ -57,13 +70,10 @@ angular.module('mctrainer').service('ModuleData',
             });
         };
 
-        /*
-         this.getModulesById = function (id) {
-         return this.getModules().$getRecord(id);
-         };
+        /**
+         * Entfernt ein Module vom User
          */
-
-        this.removeModule = function (id) { // entfernt ein Module vom User
+        this.removeModule = function (id) { //
             var item = null;
             userModules.forEach(function (el) {
                 if (el.$id == id) {
@@ -73,6 +83,11 @@ angular.module('mctrainer').service('ModuleData',
             userModules.$remove(item);
         };
 
+        /**
+         * Ein Modul anhand des Namens finden
+         *
+         * @param name Name des Moduls
+         */
         this.findByName = function (name) {
             var modules = this.getUserModules();
             var module = "";
@@ -86,6 +101,13 @@ angular.module('mctrainer').service('ModuleData',
             return module;
         };
 
+        /**
+         * Aktualisiert die Benutzerstatistik. Wird nach jeder beantworteten Frage aufgerufen.
+         *
+         * @param moduleID
+         * @param answerCorrect Ob die Antwort richtig war
+         * @param questionID Die ID der Frage
+         */
         this.questionAnswered = function (moduleID, answerCorrect, questionID) {
             userStatistics.forEach(function (el) {
                 if (el.moduleID == moduleID) {
@@ -102,6 +124,9 @@ angular.module('mctrainer').service('ModuleData',
             });
         };
 
+        /**
+         * Liefert die Statistiken zu einem bestimmten Modul.
+         */
         this.getStatsForModule = function (moduleID) {
             var item = null;
             userStatistics.forEach(function (el) {
@@ -112,9 +137,12 @@ angular.module('mctrainer').service('ModuleData',
             return item;
         };
 
-        // setzt die Statistik für das Modul zurück, falls Flag counterOnly gesetzt
-        // wird nur der Zähler für die einzelnen Fragen zurückgesetzt.
-        this.resetStats = function (counterOnly, moduleID) {
+        /**
+         * Setzt die Statistik für das Modul zurück
+         *
+         * @param counterOnly Nur den Zähler für die einzelnen Fragen zurücksetzen
+         */
+        this.resetStats = function(counterOnly, moduleID) {
             var item = null;
             userStatistics.forEach(function (el) {
                 if (el.moduleID == moduleID) {
