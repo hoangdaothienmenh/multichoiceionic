@@ -11,12 +11,6 @@ angular.module('mctrainer').controller('ModulesListCtrl',
         }, 500);
         that.modules = ModuleData.getUserModules();
 
-        $ionicPopover.fromTemplateUrl('popover.html', {
-            scope: $scope
-        }).then(function (popover) {
-            $scope.popover = popover;
-        });
-
         $ionicModal.fromTemplateUrl('templates/ModuleSearchModal.html', {
             scope: $scope,
             animation: 'slide-in-up',

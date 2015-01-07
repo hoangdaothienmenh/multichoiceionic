@@ -9,7 +9,7 @@
             <ion-item ng-repeat="module in mlCtrl.modules" href="#/modules/{{module.name}}">
                 {{module.name}}
                 <small style="color: grey;">({{module.questions.length}})</small>
-                <ion-option-button class="button button-energized icon-right ion-android-archive"
+                <ion-option-button class="button button-energized icon-left ion-information-circled"
                                    ng-click="mlCtrl.goDetails($index)">
                     Details
                 </ion-option-button>
