@@ -4,6 +4,13 @@
   <description>
         An Ionic Framework and Cordova project.
     </description>
+
+  <platform name="android">
+    <icon src="res/android/appIcon-mdpi.png" density="mdpi" />
+    <icon src="res/android/appIcon-hdpi.png" density="hdpi" />
+    <icon src="res/android/appIcon-xhdpi.png" density="xhdpi" />
+  </platform>
+
   <author email="hi@ionicframework" href="http://ionicframework.com/">
       Ionic Framework Team
     </author>
