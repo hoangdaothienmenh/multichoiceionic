@@ -1,4 +1,5 @@
-angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $timeout, $ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
+angular.module('mctrainer').controller('QuestionViewCtrl',
+  function ($scope, $timeout, $ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
     var index = 0;
     var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
     var stats = ModuleData.getStatsForModule(module.moduleID);
@@ -8,7 +9,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
 
     $timeout(function () {
         var nr = index + 1;
-        $ionicNavBarDelegate.title($stateParams.name + " Frage " + nr + "/" + module.questions.length);
+        $ionicNavBarDelegate.title($stateParams.name + " " + nr + "/" + module.questions.length);
     }, 600);
 
     this.question = module.questions[index].question;  // Anzeige der Frage
@@ -149,7 +150,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
      * @returns shuffled array
      */
     function shuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex ;
+        var currentIndex = array.length, temporaryValue, randomIndex;
 
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
