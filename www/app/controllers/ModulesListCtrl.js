@@ -25,12 +25,12 @@ angular.module('mctrainer').controller('ModulesListCtrl',
             $scope.modal = modal;
         });
 
-        this.openModal = function () {
+        this.openModal = function() {
             $scope.modules = ModuleData.getModules();
             $scope.modal.show();
         };
 
-        $scope.moduleSelected = function (module) {
+        $scope.moduleSelected = function(module) {
             var copy = false;
             var oldModule;
             if (typeof that.modules !== 'undefined') {
@@ -65,7 +65,7 @@ angular.module('mctrainer').controller('ModulesListCtrl',
         /**
          * Funktion zum Übergang von der Modulliste zur Detailansicht eines Moduls
          */
-        this.goDetails = function (index) {
+        this.goDetails = function(index) {
             $state.go('details', {name: this.modules[index].name});
         }
 
