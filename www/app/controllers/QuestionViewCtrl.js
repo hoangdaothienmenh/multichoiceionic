@@ -1,6 +1,9 @@
 angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $timeout, $ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
     var index = 0;
     var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
+    var answeredQuestions = 1;
+    var failedAnswers = 0;
+
     $timeout(function () {
         var nr = index + 1;
         $ionicNavBarDelegate.title($stateParams.name + " Frage " + nr + "/" + module.questions.length);
@@ -93,9 +96,9 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
             } else {
                 $ionicPopup.alert({
                     title: 'Statistik dieser Lernrunde',
-                    template: 'Anzahl der beantworteten Fragen: ' + '<br>' +
-                    'Richtig beantwortet: ' + '<br>' +
-                    'Quote: '
+                    template: 'Anzahl der beantworteten Fragen: ' + answeredQuestions + '<br>' +
+                    'Richtig beantwortet: ' + rightAnswers + '<br>' +
+                    'Quote: ' + quote + '%'
                 }).then(function () {
                     $ionicHistory.goBack();
                 });
