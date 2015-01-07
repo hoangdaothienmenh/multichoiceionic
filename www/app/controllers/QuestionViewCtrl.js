@@ -104,7 +104,6 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
                 });
             }
         } else {
-            index++;
             answeredQuestions++;
             var nr = index + 1;
             $ionicNavBarDelegate.title($stateParams.name + " Frage " + nr + "/" + module.questions.length);
