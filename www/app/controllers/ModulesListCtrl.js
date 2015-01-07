@@ -42,7 +42,7 @@ angular.module('mctrainer').controller('ModulesListCtrl',
                 }
                 if (copy) {
                     $ionicPopup.confirm({
-                        title: 'Das Modul ist schon vorhanden wollen sie es überschreiben?'
+                        title: 'Das Modul ist schon vorhanden. Soll es überschrieben werden?'
                         + '<br><small>' + 'Achtung die Statistik dieses Moduls wird zurückgesetzt!' + '</small>'
                     }).then(function (res) {
                         if (res) {
@@ -62,7 +62,9 @@ angular.module('mctrainer').controller('ModulesListCtrl',
             $scope.modal.hide();
         };
 
-        // Funktion zum Übergang von der Modulliste zur Detailansicht eines Moduls
+        /**
+         * Funktion zum Übergang von der Modulliste zur Detailansicht eines Moduls
+         */
         this.goDetails = function (index) {
             $state.go('details', {name: this.modules[index].name});
         }

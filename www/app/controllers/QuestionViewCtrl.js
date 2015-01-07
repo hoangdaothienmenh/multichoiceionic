@@ -62,6 +62,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
 
         for (i = 0; i < this.answers.length; i++) { // prüft ob Eingabe dem Lösungsschlüssel übereinstimmt
             if (this.isCorrect[i] != this.answered[i]) {
+                failedAnswers++;
                 tempCorrect = false;
                 break;
             } else {
@@ -73,10 +74,15 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
 
         ModuleData.questionAnswered(module.moduleID, answeredCorrect, index);
     };
+
+
+    /**
+     * Zur nächsten Frage wechseln (nach der Prüfung)
+     */
     var that = this;
-    this.nextQuestion = function () { // Funktion die nach dem Prüfen per Button zur nächsten Frage wechselt
+    this.nextQuestion = function () {
         index++;
-        answeredCounter = stats.questions[index]
+        answeredCounter = stats.questions[index];
         while (answeredCounter >= 1) {
             index++;
             answeredCounter = stats.questions[index];
@@ -97,8 +103,8 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
                 $ionicPopup.alert({
                     title: 'Statistik dieser Lernrunde',
                     template: 'Anzahl der beantworteten Fragen: ' + answeredQuestions + '<br>' +
-                    'Richtig beantwortet: ' + rightAnswers + '<br>' +
-                    'Quote: ' + quote + '%'
+                    'Richtig beantwortet: ' + rightAnswers +
+                    ' (' + quote + '%)'
                 }).then(function () {
                     $ionicHistory.goBack();
                 });
