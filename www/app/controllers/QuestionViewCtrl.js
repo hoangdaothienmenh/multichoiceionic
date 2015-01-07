@@ -37,6 +37,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
             var tempCorrect = false;
             this.isAnswered = true;
 
+            // Setzt die Haken der Checkboxen
             for (var i = 0; i < this.answers.length; i++) {
                 if (this.answered[i] || this.isCorrect[i]) {
                     this.checked[i] = true;
@@ -45,8 +46,8 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                 }
             }
 
-
-            for (i = 0; i < this.answers.length; i++) { // prüft ob Eingabe dem Lösungsschlüssel übereinstimmt
+            // prüft ob Eingabe dem Lösungsschlüssel übereinstimmt
+            for (i = 0; i < this.answers.length; i++) {
                 if (this.isCorrect[i] != this.answered[i]) {
                     failedAnswers++;
                     tempCorrect = false;
@@ -55,7 +56,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                     tempCorrect = true;
                 }
             }
-            answeredCorrect = tempCorrect; //setzt Haken bei den richtigen Antworten
+            answeredCorrect = tempCorrect;
 
             ModuleData.questionAnswered(module.moduleID, answeredCorrect, index);
         };
@@ -66,18 +67,21 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
          */
         var that = this;
         this.nextQuestion = function () {
+            // Index erhöhtt, Zähler für nächste Frage geladen
             index++;
             answeredCounter = stats.questions[index];
+
+            //Vorgang von oben wird wiederholt bis nicht gemeisterte Frage kommt
             while (answeredCounter >= 1) {
                 index++;
                 answeredCounter = stats.questions[index];
             }
 
-            if (index == module.questions.length) {
+            if (index == module.questions.length) { // Falls Ende des Fragenkatalogs errreicht
                 var rightAnswers = answeredQuestions - failedAnswers;
                 var quote = Math.floor((rightAnswers / answeredQuestions) * 100);
-                if (this.checkWhetherMastered()) {
-                    $ionicPopup.alert({
+                if (this.checkWhetherMastered()) { // Und ALLE Fragen 6 mal beantwortet wurden
+                    $ionicPopup.alert({ // Benutzer hinweisen - Alle Zähler zurücksetzen
                         title: 'Glückwunsch!',
                         template: 'Du hast alle Fragen gemeistert. Dein Zähler wurde zurückgesetzt.'
                     }).then(function () {
@@ -85,6 +89,8 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                         $ionicHistory.goBack();
                     });
                 } else {
+                    // wenn nicht alle Fragen gemeistert ->
+                    // Popup mit Statistik über die aktuelle Runde anzeigen und zurück zu Home
                     $ionicPopup.alert({
                         title: 'Statistik dieser Lernrunde',
                         template: 'Anzahl der beantworteten Fragen: ' + answeredQuestions + '<br>' +
@@ -94,7 +100,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                         $ionicHistory.goBack();
                     });
                 }
-            } else {
+            } else { // andernfalls nächste Frage initialisieren
                 answeredQuestions++;
                 var nr = index + 1;
                 $ionicNavBarDelegate.title($stateParams.name + " Frage " + nr + "/" + module.questions.length);
@@ -115,6 +121,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
 
         /**
          * Prüfen, ob alle Fragen schon 6 mal beantwortet wurden
+         * @return boolean
          */
         this.checkWhetherMastered = function () {
             for (var i = 0; i < stats.questions.length; i++) {
