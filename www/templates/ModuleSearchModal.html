@@ -20,7 +20,7 @@
         <ion-list class="list">
             <ion-item class="list-item item-text-wrap"
                       ng-repeat="module in filteredModules =
-                      (modules | filter:searchQuery | orderBy:'name')"
+                      (moduleList | filter:searchQuery | orderBy:'name')"
                       ng-click="moduleSelected(module)">
                 {{module.name}} ({{module.questions.length}})
             </ion-item>

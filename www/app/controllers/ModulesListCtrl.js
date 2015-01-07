@@ -20,7 +20,7 @@ angular.module('mctrainer').controller('ModulesListCtrl',
         });
 
         this.openModal = function() {
-            $scope.modules = ModuleData.getModules();
+            $scope.moduleList = ModuleData.getModules();
             $scope.modal.show();
         };
 
@@ -42,10 +42,12 @@ angular.module('mctrainer').controller('ModulesListCtrl',
                         if (res) {
                             ModuleData.removeModule(oldModule.$id);
                             ModuleData.addModuleToUser(module);
+                            that.modules = ModuleData.getUserModules();
                             $scope.modal.hide();
                         }
                     });
                 } else {
+
                     ModuleData.addModuleToUser(module);
                     that.modules = ModuleData.getUserModules();
                 }
