@@ -1,7 +1,7 @@
 <ion-view>
     <ion-nav-buttons side="secondary">
-        <button class="button button-icon icon ion-navicon-round"
-                ng-click="popover.show($event)">
+        <button class="button button-icon icon ion-android-download"
+                ng-click="mlCtrl.openModal()">
         </button>
     </ion-nav-buttons>
     <ion-content class="has-header">
@@ -17,14 +17,3 @@
         </ion-list>
     </ion-content>
 </ion-view>
-
-<script id="popover.html" type="text/ng-template">
-    <ion-popover-view>
-        <ion-list>
-            <ion-item ng-click="mlCtrl.openModal();popover.hide();">
-                <i class="icon icon-left ion-android-book"></i>
-                Module laden
-            </ion-item>
-        </ion-list>
-    </ion-popover-view>
-</script>
