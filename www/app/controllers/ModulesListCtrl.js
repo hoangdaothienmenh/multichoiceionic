@@ -1,15 +1,14 @@
 'use strict';
 angular.module('mctrainer').controller('ModulesListCtrl',
     function ($scope, $state, $timeout, $ionicPopover, $ionicModal, ModuleData, $ionicNavBarDelegate, $ionicPopup, $ionicLoading) {
+        $ionicNavBarDelegate.title("Menü");
         var that = this;
         $ionicLoading.show({
             template: 'Loading...'
         });
         $timeout(function () {
-            $ionicNavBarDelegate.title('MC-Trainer');
-
             $ionicLoading.hide();
-        }, 600);
+        }, 500);
         that.modules = ModuleData.getUserModules();
 
         $ionicPopover.fromTemplateUrl('popover.html', {
@@ -18,10 +17,6 @@ angular.module('mctrainer').controller('ModulesListCtrl',
             $scope.popover = popover;
         });
 
-        this.showStats = function () {
-            //TODO
-            alert("Stats TODO");
-        };
         $ionicModal.fromTemplateUrl('templates/ModuleSearchModal.html', {
             scope: $scope,
             animation: 'slide-in-up',
@@ -53,7 +48,6 @@ angular.module('mctrainer').controller('ModulesListCtrl',
                         if (res) {
                             ModuleData.removeModule(oldModule.$id);
                             ModuleData.addModuleToUser(module);
-                            console.log(module.questions);
                             $scope.modal.hide();
                         }
                     });

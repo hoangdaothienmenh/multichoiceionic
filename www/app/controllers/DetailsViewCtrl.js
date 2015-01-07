@@ -1,7 +1,7 @@
 angular.module('mctrainer').controller('DetailsViewCtrl', function ($ionicModal, $scope, $state,$stateParams, ModuleData, $ionicNavBarDelegate) {
     $ionicNavBarDelegate.title($stateParams.name);
     var questions = ModuleData.findByName($stateParams.name).questions;
-    //TODO
+    var moduleID = ModuleData.findByName($stateParams.name).moduleID;
     this.questions = questions;
     this.correct = questions.answers;
     
@@ -19,9 +19,13 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($ionicModal,
         }
 
         $scope.modal.show();
-    }
+    };
 
-    $ionicModal.fromTemplateUrl('templates/ShowQuestionView.html', {
+    this.resetData = function () {
+        ModuleData.resetStats(false, moduleID);
+    };
+
+    $ionicModal.fromTemplateUrl('templates/ShowQuestionModal.html', {
         scope: $scope,
         animation: 'slide-in-up',
         focusFirstInput: true

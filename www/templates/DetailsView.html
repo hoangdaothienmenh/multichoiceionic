@@ -11,12 +11,14 @@
             <ion-item class="item"
                       ng-repeat="q in filteredQuestions =  (dvCtrl.questions | filter:dvCtrl.searchQuery | orderBy:question)"
                       ng-click="dvCtrl.showQuestion(q)">
-                {{q.question}}<br>
-                <!--<span ng-repeat="a in filteredAnswers = (q.answers | filter:dvCtrl.searchQuery.answers | orderBy:question)"
-                      style="color:limegreen;font-size: 12px"> {{a}} </span>-->
-
+                {{q.question}}
             </ion-item>
         </ion-list>
+        <label>
+            <button class="button button-assertive" style="align-self: auto" ng-click="dvCtrl.resetData()">
+                Statistik zurücksetzen
+            </button>
+        </label>
 
     </ion-content>
 </ion-view>

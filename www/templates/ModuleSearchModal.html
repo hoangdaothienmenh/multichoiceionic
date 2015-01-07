@@ -1,4 +1,4 @@
-<ion-modal-view>
+<ion-modal-view class="modal">
 
     <div class="bar bar-header bar-energized">
         <h1 class="title">Module</h1>
@@ -18,8 +18,8 @@
                     ng-click="searchQuery=''" ng-show="searchQuery">Cancel
             </button>
         </div>
-        <ion-list>
-            <ion-item class="item-text-wrap"
+        <ion-list class="list">
+            <ion-item class="list-item item-text-wrap"
                       ng-repeat="module in filteredModules =
                       (modules | filter:searchQuery | orderBy:'name')"
                       ng-click="moduleSelected(module)">

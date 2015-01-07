@@ -43,7 +43,6 @@ angular.module('mctrainer').service('ModuleData',
         };
 
         this.addModuleToUser = function (module) { // Fügt ausgewähltes Modul zum Benutzerkatalog hinzu.
-            console.log(module.questions);
             userModules.$add(module).then(function () {
                 var questionid = module.questions;
                 for (var i = 0; i < module.questions.length; i++) {
@@ -65,25 +64,29 @@ angular.module('mctrainer').service('ModuleData',
          */
 
         this.removeModule = function (id) { // entfernt ein Module vom User
-            var modules = this.getUserModules();
-            modules.$remove(modules.$getRecord(id));
+            var item = null;
+            userModules.forEach(function (el) {
+                if (el.$id == id) {
+                    item = userModules.$getRecord(el.$id);
+                }
+            });
+            userModules.$remove(item);
         };
 
         this.findByName = function (name) {
             var modules = this.getUserModules();
-            var question = "";
+            var module = "";
 
             modules.forEach(function (ele) {
 
                 if (ele.name == name) {
-                    question = ele;
+                    module = ele;
                 }
             });
-            return question;
+            return module;
         };
 
         this.questionAnswered = function (moduleID, answerCorrect, questionID) {
-            console.log(questionID);
             userStatistics.forEach(function (el) {
                 if (el.moduleID == moduleID) {
                     var item = userStatistics.$getRecord(el.$id);
@@ -107,5 +110,26 @@ angular.module('mctrainer').service('ModuleData',
                 }
             });
             return item;
+        };
+
+        // setzt die Statistik für das Modul zurück, falls Flag counterOnly gesetzt
+        // wird nur der Zähler für die einzelnen Fragen zurückgesetzt.
+        this.resetStats = function (counterOnly, moduleID) {
+            var item = null;
+            userStatistics.forEach(function (el) {
+                if (el.moduleID == moduleID) {
+                    item = userStatistics.$getRecord(el.$id);
+                }
+            });
+
+            var questionid = item.questions;
+            for (var i = 0; i < item.questions.length; i++) {
+                questionid[i] = 0;
+            }
+            if (!counterOnly) {
+                item.correct_answers = 0;
+                item.questions_answered = 0;
+            }
+            userStatistics.$save(item);
         };
     });

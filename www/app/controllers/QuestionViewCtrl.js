@@ -1,16 +1,25 @@
 angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $timeout, $ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
+    var index = 0;
+    var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
     $timeout(function () {
-        $ionicNavBarDelegate.title($stateParams.name);
+        var nr = index + 1;
+        $ionicNavBarDelegate.title($stateParams.name + " Frage " + nr + "/" + module.questions.length);
     }, 600);
 
     var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
     // Bildet Zufallszahl aus der Länge der Fragen
     var index = 0;
     var stats = ModuleData.getStatsForModule(module.moduleID);
-    console.log(stats);
+    var answeredCounter = stats.questions[index];
+
+    while (answeredCounter >= 1) {
+        index++;
+        answeredCounter = stats.questions[index];
+    }
+    $ionicNavBarDelegate.title($stateParams.name + " Frage " + index + "/" + module.questions.length);
     this.question = module.questions[index].question;  // Anzeige der Frage
     this.answers = shuffle(Object.keys(module.questions[index].answers)); //Array der Antworten
-    this.checked = {};  // Var zum Setzen der Haken der Checkboxen
+    this.checked = {};  // Var zum Setzen der Checkbox-Haken
     this.isAnswered = false; // Var für Status ob Frage beantwortet wurde oder nicht.
     this.answered = {}; // Var für die Antworten des Benutzers
     var initKeyAnswer = module.questions[index].answers; // Antworten als anwort:boolean
@@ -51,7 +60,6 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         for (i = 0; i < this.answers.length; i++) { // prüft ob Eingabe dem Lösungsschlüssel übereinstimmt
             if (this.isCorrect[i] != this.answered[i]) {
                 tempCorrect = false;
-                failedAnswers++;
                 break;
             } else {
                 tempCorrect = true;
@@ -64,23 +72,39 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
     };
     var that = this;
     this.nextQuestion = function () { // Funktion die nach dem Prüfen per Button zur nächsten Frage wechselt
+        index++;
+        answeredCounter = stats.questions[index]
+        while (answeredCounter >= 1) {
+            index++;
+            answeredCounter = stats.questions[index];
+        }
 
-        if (index == module.questions.length-1) {
-
+        if (index == module.questions.length) {
             var rightAnswers = answeredQuestions - failedAnswers;
             var quote = Math.floor((rightAnswers / answeredQuestions) * 100);
-
-            $ionicPopup.alert({
-                title: 'Statistik dieser Lernrunde',
-                template: 'Anzahl der beantworteten Fragen: ' + '<br>' +
-                'Richtig beantwortet: ' + '<br>' +
-                'Quote: '
-            }).then(function () {
-                $ionicHistory.goBack();
-            });
+            if (checkForMastered()) {
+                $ionicPopup.alert({
+                    title: 'Glückwunsch!',
+                    template: 'Du hast alle Fragen gemeistert. Dein Zähler wurde zurückgesetzt.'
+                }).then(function () {
+                    ModuleData.resetStats(true, module.moduleID);
+                    $ionicHistory.goBack();
+                });
+            } else {
+                $ionicPopup.alert({
+                    title: 'Statistik dieser Lernrunde',
+                    template: 'Anzahl der beantworteten Fragen: ' + '<br>' +
+                    'Richtig beantwortet: ' + '<br>' +
+                    'Quote: '
+                }).then(function () {
+                    $ionicHistory.goBack();
+                });
+            }
         } else {
             index++;
             answeredQuestions++;
+            var nr = index + 1;
+            $ionicNavBarDelegate.title($stateParams.name + " Frage " + nr + "/" + module.questions.length);
             that.question = module.questions[index].question;  // Anzeige der Frage
             that.answers = Object.keys(module.questions[index].answers); //Array der Antworten
             that.checked = {};  // Var zum Setzen der Haken der Checkboxen
@@ -120,5 +144,16 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         }
 
         return array;
+    }
+
+    // Funktion prüft ob alle Fragen schon 6 mal beantwortet wurden
+    function checkForMastered() {
+        var temp = true;
+        for (var i = 0; i < stats.questions.length; i++) {
+            if (stats.questions[i] < 1) {
+                temp = false;
+            }
+        }
+        return temp;
     }
 });
