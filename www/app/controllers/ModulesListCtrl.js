@@ -1,7 +1,7 @@
 'use strict';
 angular.module('mctrainer').controller('ModulesListCtrl',
     function ($scope, $state, $timeout, $ionicPopover, $ionicModal, ModuleData, $ionicNavBarDelegate, $ionicPopup, $ionicLoading) {
-        $ionicNavBarDelegate.title("Menü");
+        $ionicNavBarDelegate.title("Home");
         var that = this;
         $ionicLoading.show({
             template: 'Loading...'

@@ -14,10 +14,6 @@ angular.module('mctrainer', ['ionic', 'firebase'])
                 url: '/modules/details/:name',
                 templateUrl: 'templates/DetailsView.html',
                 controller: 'DetailsViewCtrl as dvCtrl'
-            }).state('showQuestion',{
-                url: 'modules/showQuestion/:name',
-                templateUrl: 'templates/ShowQuestionModal.html',
-                controller: 'ShowQuestionCtrl as sqCtrl'
             });
 
         $urlRouterProvider.otherwise('/modules');
