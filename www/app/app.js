@@ -1,4 +1,4 @@
-angular.module('mctrainer', ['ionic', 'firebase'])
+angular.module('mctrainer', ['ionic', 'firebase', 'angles'])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('modules', {

@@ -2,9 +2,8 @@
     <ion-content class="content">
         <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
         <div class="text-center">
-            <p ng-bind="dvCtrl.frage" style="font-size: 30px; font-family: 'Architects Daughter'"></p>
+            <p ng-bind="dvCtrl.question" style="font-size: 30px; font-family: 'Architects Daughter'"></p>
         </div>
-        <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
 
         <ion-list class="list">
             <ion-item class="item" ng-repeat="answers in dvCtrl.answers">
@@ -14,6 +13,7 @@
                 {{answers}}</span>
             </ion-item>
         </ion-list>
-        <button class="button button-full button-energized" ng-click="modal.hide()">Schließen</button>
+
+        <button class="button button-full button-energized" ng-click="modalQuestion.hide()">Schließen</button>
     </ion-content>
 </ion-modal-view>

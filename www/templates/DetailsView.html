@@ -1,4 +1,9 @@
 <ion-view class="view" cache-view="false">
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon icon ion-stats-bars"
+                ng-click="dvCtrl.showStats()">
+        </button>
+    </ion-nav-buttons>
     <ion-content>
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
@@ -13,10 +18,5 @@
                 {{q.question}}
             </ion-item>
         </ion-list>
-        <label>
-            <button class="button button-assertive" style="align-self: auto" ng-click="dvCtrl.resetStats()">
-                Statistik zurücksetzen
-            </button>
-        </label>
     </ion-content>
 </ion-view>
