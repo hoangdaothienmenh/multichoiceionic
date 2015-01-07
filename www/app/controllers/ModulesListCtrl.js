@@ -19,12 +19,12 @@ angular.module('mctrainer').controller('ModulesListCtrl',
             $scope.modal = modal;
         });
 
-        this.openModal = function() {
+        this.openModal = function () {
             $scope.moduleList = ModuleData.getModules();
             $scope.modal.show();
         };
 
-        $scope.moduleSelected = function(module) {
+        $scope.moduleSelected = function (module) {
             var copy = false;
             var oldModule;
             if (typeof that.modules !== 'undefined') {
@@ -42,26 +42,20 @@ angular.module('mctrainer').controller('ModulesListCtrl',
                         if (res) {
                             ModuleData.removeModule(oldModule.$id);
                             ModuleData.addModuleToUser(module);
-                            that.modules = ModuleData.getUserModules();
-                            $scope.modal.hide();
                         }
                     });
                 } else {
-
                     ModuleData.addModuleToUser(module);
-                    that.modules = ModuleData.getUserModules();
                 }
-            } else {
-                ModuleData.addModuleToUser(module);
-                that.modules = ModuleData.getUserModules();
             }
+            that.modules = ModuleData.getUserModules();
             $scope.modal.hide();
         };
 
         /**
          * Funktion zum Übergang von der Modulliste zur Detailansicht eines Moduls
          */
-        this.goDetails = function(index) {
+        this.goDetails = function (index) {
             $state.go('details', {name: this.modules[index].name});
         }
 

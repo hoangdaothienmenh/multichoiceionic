@@ -4,7 +4,7 @@ angular.module('mctrainer').service('ModuleData',
         var rootRef = new Firebase(FIREBASE_URL);
         var usersRef = rootRef.child('users');
         var modulesRef = rootRef.child('modules');
-        var modules = $firebase(modulesRef).$asArray();
+        var serverModules = $firebase(modulesRef).$asArray();
         var usersRefAngular = $firebase(usersRef);
         var userID = localStorage.getItem('userid');
         var userModules;
@@ -40,7 +40,7 @@ angular.module('mctrainer').service('ModuleData',
          * Array mit den Modulen, die angeboten werden
          */
         this.getModules = function () {
-            return modules;
+            return serverModules;
         };
 
         /**
@@ -57,16 +57,19 @@ angular.module('mctrainer').service('ModuleData',
          */
         this.addModuleToUser = function (module) {
             userModules.$add(module).then(function () {
-                var questionid = module.questions;
+                var questionid = [];
+
                 for (var i = 0; i < module.questions.length; i++) {
                     questionid[i] = 0;
                 }
+
                 userStatistics.$add({
                     moduleID: module.$id,
                     questions_answered: 0,
                     correct_answers: 0,
                     questions: questionid
                 });
+
             });
         };
 
