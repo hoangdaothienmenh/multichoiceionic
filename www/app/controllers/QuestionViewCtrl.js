@@ -11,10 +11,6 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         $ionicNavBarDelegate.title($stateParams.name + " Frage " + nr + "/" + module.questions.length);
     }, 600);
 
-    while (answeredCounter >= 1) {
-        index++;
-        answeredCounter = stats.questions[index];
-    }
     this.question = module.questions[index].question;  // Anzeige der Frage
     this.answers = shuffle(Object.keys(module.questions[index].answers)); //Array der Antworten
     this.checked = {};  // Var zum Setzen der Checkbox-Haken
@@ -24,23 +20,16 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
     var initKeyAnswer = module.questions[index].answers; // Antworten als anwort:boolean
     var answeredCorrect = false; // Var ob richtig geantwortet wurde.
 
+    while (answeredCounter >= 1) {
+        index++;
+        answeredCounter = stats.questions[index];
+    }
+
     // (Checkboxwerte auf false/ Lösungschlüssel)  initialisieren
     for (var i = 0; i < this.answers.length; i++) {
         this.answered[i] = false;
         this.isCorrect[i] = initKeyAnswer[this.answers[i]];
     }
-
-    this.showAllStats = function() {
-        var stats = ModuleData.getStatsForModule(module.moduleID);
-        var percent = stats.questions_answered == 0 ? 0 :
-            Math.floor((stats.correct_answers / stats.questions_answered) * 100);
-        $ionicPopup.alert({
-            title: 'Statistik aller Lernrunden',
-            template: 'Anzahl der beantworteten Fragen: ' + stats.questions_answered + '<br>' +
-            'Richtig beantwortet: ' + stats.correct_answers +
-                    ' (' + percent + '%)'
-        });
-    };
 
     /**
      * Überprüfen, ob die gewählte Antwort richtig ist.
@@ -135,6 +124,21 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
             }
         }
         return true;
+    };
+
+    /**
+     * Zeigt ein Alert-Fenster mit einer Statistik über alle Lernrunden.
+     */
+    this.showAllStats = function() {
+        var stats = ModuleData.getStatsForModule(module.moduleID);
+        var percent = stats.questions_answered == 0 ? 0 :
+          Math.floor((stats.correct_answers / stats.questions_answered) * 100);
+        $ionicPopup.alert({
+            title: 'Statistik aller Lernrunden',
+            template: 'Anzahl der beantworteten Fragen: ' + stats.questions_answered + '<br>' +
+            'Richtig beantwortet: ' + stats.correct_answers +
+            ' (' + percent + '%)'
+        });
     };
 
     /**

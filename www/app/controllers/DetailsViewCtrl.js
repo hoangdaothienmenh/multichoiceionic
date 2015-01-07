@@ -4,10 +4,6 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($ionicModal,
     var moduleID = ModuleData.findByName($stateParams.name).moduleID;
     this.questions = questions;
     this.correct = questions.answers;
-    
-
-    //console.log(answers);
-    //this.answers = answers;
 
     this.showQuestion = function(q){
         this.isCorrect = [];
@@ -21,7 +17,7 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($ionicModal,
         $scope.modal.show();
     };
 
-    this.resetData = function () {
+    this.resetStats = function () {
         ModuleData.resetStats(false, moduleID);
     };
 

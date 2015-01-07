@@ -43,7 +43,7 @@ angular.module('mctrainer').controller('ModulesListCtrl',
                 if (copy) {
                     $ionicPopup.confirm({
                         title: 'Das Modul ist schon vorhanden. Soll es überschrieben werden?'
-                        + '<br><small>' + 'Achtung die Statistik dieses Moduls wird zurückgesetzt!' + '</small>'
+                        + '<br><small>' + 'Achtung: Die Statistik dieses Moduls wird zurückgesetzt!' + '</small>'
                     }).then(function (res) {
                         if (res) {
                             ModuleData.removeModule(oldModule.$id);

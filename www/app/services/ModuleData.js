@@ -6,7 +6,6 @@ angular.module('mctrainer').service('ModuleData',
         var modulesRef = rootRef.child('modules');
         var modules = $firebase(modulesRef).$asArray();
         var usersRefAngular = $firebase(usersRef);
-        //var allUsers = $firebase(usersRef).$asArray();
         var userID = localStorage.getItem('userid');
         var userModules;
         var userStatistics;
