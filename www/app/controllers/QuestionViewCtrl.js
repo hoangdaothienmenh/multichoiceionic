@@ -3,6 +3,9 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         $ionicNavBarDelegate.title($stateParams.name);
     }, 600);
 
+    var answeredQuestions = 1;
+    var failedAnswers = 0;
+
     function shuffle(array) { // Funktion zum mischen der Antworten
         var currentIndex = array.length, temporaryValue, randomIndex ;
 
@@ -86,6 +89,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
         for (i = 0; i < this.answers.length; i++) { // prüft ob Eingabe dem Lösungsschlüssel übereinstimmt
             if (this.isCorrect[i] != this.answered[i]) {
                 tempCorrect = false;
+                failedAnswers++;
                 break;
             } else {
                 tempCorrect = true;
@@ -100,16 +104,21 @@ angular.module('mctrainer').controller('QuestionViewCtrl', function ($scope, $ti
     this.nextQuestion = function () { // Funktion die nach dem Prüfen per Button zur nächsten Frage wechselt
 
         if (index == module.questions.length-1) {
+
+            var rightAnswers = answeredQuestions - failedAnswers;
+            var quote = Math.floor((rightAnswers / answeredQuestions) * 100);
+
             $ionicPopup.alert({
                 title: 'Statistik dieser Lernrunde',
-                template: 'Anzahl der beantworteten Fragen: ' + '<br>' +
-                'Richtig beantwortet: ' + '<br>' +
-                'Quote: '
+                template: 'Anzahl der beantworteten Fragen: ' + answeredQuestions + '<br>' +
+                'Richtig beantwortet: ' + rightAnswers + '<br>' +
+                'Quote: ' + quote + '%'
             }).then(function () {
                 $ionicHistory.goBack();
             });
         } else {
             index++;
+            answeredQuestions++;
             that.question = module.questions[index].question;  // Anzeige der Frage
             that.answers = Object.keys(module.questions[index].answers); //Array der Antworten
             that.checked = {};  // Var zum Setzen der Haken der Checkboxen
