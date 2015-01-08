@@ -1,4 +1,4 @@
-angular.module('mctrainer').controller('DetailsViewCtrl', function ($timeout, $ionicModal, $scope, $state, $stateParams, ModuleData, $ionicNavBarDelegate) {
+angular.module('mctrainer').controller('DetailsViewCtrl', function ($timeout, $ionicPopup, $ionicModal, $scope, $state, $stateParams, ModuleData, $ionicNavBarDelegate) {
     $timeout(function () {
         $ionicNavBarDelegate.title($stateParams.name);
     }, 500);
@@ -45,7 +45,16 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($timeout, $i
     };
 
     this.resetStats = function () {
-        ModuleData.resetStats(false, moduleID);
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Zurücksetzen?',
+            template: 'Sind Sie sich sicher, dass Sie die Statistik zurücksetzen wollen?'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                ModuleData.resetStats(false, moduleID);
+            }
+            $scope.modalStats.hide();
+        });
     };
 
     $ionicModal.fromTemplateUrl('templates/ShowQuestionModal.html', {
