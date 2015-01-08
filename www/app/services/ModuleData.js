@@ -78,12 +78,21 @@ angular.module('mctrainer').service('ModuleData',
          */
         this.removeModule = function (id) { //
             var item = null;
+            var item2 = null;
+            var moduleID = 0;
             userModules.forEach(function (el) {
                 if (el.$id == id) {
                     item = userModules.$getRecord(el.$id);
                 }
             });
+            moduleID = item.moduleID
+            userStatistics.forEach(function (el) {
+                if (el.moduleID == moduleID) {
+                    item2 = userStatistics.$getRecord(el.$id);
+                }
+            });
             userModules.$remove(item);
+            userStatistics.$remove(item2);
         };
 
         /**

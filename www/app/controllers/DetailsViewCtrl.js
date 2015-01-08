@@ -6,7 +6,6 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($timeout, $i
     var stats = ModuleData.getStatsForModule(module.moduleID);
     var questions = module.questions;
     var moduleID = ModuleData.findByName($stateParams.name).moduleID;
-    console.log(stats);
     this.questions = questions;
     this.correct = questions.answers;
 
@@ -22,26 +21,43 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($timeout, $i
 
     this.showStats = function () {
         var questionsMastered = 0;
+        if (stats.questions_answered == 0) {
+            $ionicPopup.alert({ // Benutzer hinweisen - Alle Zähler zurücksetzen
+                title: 'Keine Fragen beantwortet!',
+                template: 'Bitte beantworte erst einige Fragen im Lernmodus um eine Statistik zu haben.'
+            });
+        } else {
+            for (var i = 0; i < stats.questions.length; i++) {
+                if (stats.questions[i] >= 1)
+                    questionsMastered++;
+            }
 
-        for (var i = 0; i < stats.questions.length; i++) {
-            if (stats.questions[i] == 6)
-                questionsMastered++;
+            $scope.allStats = [{
+                value: stats.questions_answered - stats.correct_answers,
+                color: "#F7464A",
+                highlight: "#FF5A5E",
+                label: "Falsch"
+            },
+                {value: stats.correct_answers, color: "#46BFBD", highlight: "#5AD3D1", label: "Richtig"}];
+
+            if (questionsMastered == 0) {
+                $scope.counterStats = [{
+                    value: stats.questions.length,
+                    color: "#85898C",
+                    highlight: "#A9ADAA",
+                    label: "Ungemeistert"
+                }];
+            } else {
+                $scope.counterStats = [{
+                    value: stats.questions.length - questionsMastered,
+                    color: "#85898C",
+                    highlight: "#A9ADAA"
+                }, {value: questionsMastered, color: "#46BFBD", highlight: "#5AD3D1", label: "Gemeistert"}];
+            }
+
+
+            $scope.modalStats.show();
         }
-        $scope.allStats = [{
-            value: stats.questions_answered - stats.correct_answers, color: "#F7464A",
-            highlight: "#FF5A5E", label: "Falsch"
-        },
-            {value: stats.correct_answers, color: "#46BFBD", highlight: "#5AD3D1", label: "Richtig"}];
-        $scope.counterStats = [{
-            value: stats.questions.length - questionsMastered, color: "#F7464A",
-            highlight: "#FF5A5E"
-        },
-            {value: questionsMastered, color: "#46BFBD", highlight: "#5AD3D1", label: "Gemeistert"}];
-        $scope.options = [{
-            responsive: true,
-            showTooltips: true
-        }];
-        $scope.modalStats.show();
     };
 
     this.resetStats = function () {
@@ -49,8 +65,8 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($timeout, $i
             title: 'Zurücksetzen?',
             template: 'Sind Sie sich sicher, dass Sie die Statistik zurücksetzen wollen?'
         });
-        confirmPopup.then(function(res) {
-            if(res) {
+        confirmPopup.then(function (res) {
+            if (res) {
                 ModuleData.resetStats(false, moduleID);
             }
             $scope.modalStats.hide();
