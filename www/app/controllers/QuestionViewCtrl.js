@@ -1,6 +1,5 @@
 angular.module('mctrainer').controller('QuestionViewCtrl',
     function ($scope, $timeout, $ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
-        $scope.on = true;
         var that = this;
         var index = 0;
         var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
@@ -72,7 +71,6 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
             // Index erhöhtt, Zähler für nächste Frage geladen
             index++;
             answeredCounter = stats.questions[index];
-            $scope.on = !$scope.on;
 
             //Vorgang von oben wird wiederholt bis nicht gemeisterte Frage kommt
             while (answeredCounter >= 1) {
@@ -120,8 +118,6 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                     that.isCorrect[i] = initKeyAnswer[that.answers[i]];
                 }
             }
-            $scope.on = !$scope.on;
-
         };
 
         /**
