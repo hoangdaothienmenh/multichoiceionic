@@ -47,6 +47,8 @@ angular.module('mctrainer').controller('ModulesListCtrl',
                 } else {
                     ModuleData.addModuleToUser(module);
                 }
+            }else{
+                ModuleData.addModuleToUser(module);
             }
             that.modules = ModuleData.getUserModules();
             $scope.modal.hide();
