@@ -1,5 +1,7 @@
 angular.module('mctrainer').controller('QuestionViewCtrl',
     function ($scope, $timeout, $ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
+        $scope.on = true;
+        var that = this;
         var index = 0;
         var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
         var stats = ModuleData.getStatsForModule(module.moduleID);
@@ -37,6 +39,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
             var tempCorrect = false;
             this.isAnswered = true;
 
+
             // Setzt die Haken der Checkboxen
             for (var i = 0; i < this.answers.length; i++) {
                 if (this.answered[i] || this.isCorrect[i]) {
@@ -65,11 +68,11 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
         /**
          * Zur nächsten Frage wechseln (nach der Prüfung)
          */
-        var that = this;
         this.nextQuestion = function () {
             // Index erhöhtt, Zähler für nächste Frage geladen
             index++;
             answeredCounter = stats.questions[index];
+            $scope.on = !$scope.on;
 
             //Vorgang von oben wird wiederholt bis nicht gemeisterte Frage kommt
             while (answeredCounter >= 1) {
@@ -117,6 +120,8 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                     that.isCorrect[i] = initKeyAnswer[that.answers[i]];
                 }
             }
+            $scope.on = !$scope.on;
+
         };
 
         /**

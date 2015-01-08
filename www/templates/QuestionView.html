@@ -12,7 +12,8 @@
         <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
         <ion-list class="list">
             <label class="item item-checkbox" ng-repeat="answer in qvCtrl.answers">
-                <label class="checkbox checkbox-balanced" ng-show="qvCtrl.isAnswered" ng-if="qvCtrl.isCorrect[$index]">
+                <label class="checkbox checkbox-balanced" ng-show="qvCtrl.isAnswered"
+                       ng-if="qvCtrl.isCorrect[$index]">
                     <input type="checkbox" ng-checked="qvCtrl.checked[$index]">
                 </label>
                 <label class="checkbox checkbox-assertive" ng-show="qvCtrl.isAnswered"
@@ -23,18 +24,21 @@
                     <input type="checkbox" ng-model="qvCtrl.answered[$index]">
                 </label>
 
-                <strong>{{answer}}</strong>
-            </label>
+                <span><strong>{{answer}}</strong></span>
+                </label>
         </ion-list>
-        <div ng-hide="qvCtrl.isAnswered">
-            <button class="button button-energized button-block icon-right ion-android-lightbulb"
-                    ng-click="qvCtrl.check()">Prüfen
-            </button>
-        </div>
-        <div ng-show="qvCtrl.isAnswered">
-            <button class="button button-energized button-block icon-right ion-chevron-right"
-                    ng-click="qvCtrl.nextQuestion()">Nächste Frage
-            </button>
+
+        <div class="bar-footer">
+            <div ng-hide="qvCtrl.isAnswered">
+                <button class="button button-energized button-block icon-right ion-android-lightbulb"
+                        ng-click="qvCtrl.check()">Prüfen
+                </button>
+            </div>
+            <div ng-show="qvCtrl.isAnswered">
+                <button class="button button-energized button-block icon-right ion-chevron-right"
+                        ng-click="qvCtrl.nextQuestion()">Nächste Frage
+                </button>
+            </div>
         </div>
     </ion-content>
 </ion-view>
