@@ -6,9 +6,9 @@
     </description>
 
   <platform name="android">
-    <icon src="res/android/appIcon-mdpi.png" density="mdpi" />
-    <icon src="res/android/appIcon-hdpi.png" density="hdpi" />
-    <icon src="res/android/appIcon-xhdpi.png" density="xhdpi" />
+    <icon src="res/android/mdpi.png" density="mdpi" />
+    <icon src="res/android/hdpi.png" density="hdpi" />
+    <icon src="res/android/xhdpi.png" density="xhdpi" />
   </platform>
 
 
