@@ -1,7 +1,7 @@
 {
   "name": "mc-trainer",
   "version": "1.0.0",
-  "description": "mc-trainer: An Ionic project",
+  "description": "mc-trainer: Ein Multiple Choice Trainer um das Lernen zu vereinfachen.",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",

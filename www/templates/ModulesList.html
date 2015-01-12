@@ -6,14 +6,21 @@
     </ion-nav-buttons>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="module in mlCtrl.modules" href="#/modules/{{module.name}}">
-                {{module.name}}
-                <small style="color: grey;">({{module.questions.length}})</small>
+            <ion-item class="text-center" ng-repeat="module in mlCtrl.modules" href="#/modules/{{module.name}}">
+
+                <span style="align: center">{{module.name}}
+                <small style="color: grey;">({{module.questions.length}})</small></span>
                 <ion-option-button class="button button-energized icon-left ion-information-circled"
                                    ng-click="mlCtrl.goDetails($index)">
                     Details
                 </ion-option-button>
             </ion-item>
         </ion-list>
+        <div class="card" ng-hide="mlCtrl.modules.length" ng-click="mlCtrl.openModal()">
+            <div class="item item-text-wrap text-center">
+                <i class="icon icon-right ion-plus"></i>
+                <span style="margin-left: 10px">Module laden</span>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

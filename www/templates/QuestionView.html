@@ -1,17 +1,12 @@
 <ion-view cache-view="false">
-    <ion-nav-buttons class="" side="right">
-        <button class="button button-icon ion-pie-graph"
-                ng-click="qvCtrl.showAllStats()">
-        </button>
-    </ion-nav-buttons>
     <ion-content class="has-header">
         <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
-        <div class="text-center">
+        <div class="text-center item-text-wrap">
             <p ng-bind="qvCtrl.question" style="font-size: 30px; font-family: 'Architects Daughter'"></p>
         </div>
         <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
         <ion-list class="list">
-            <label class="item item-checkbox" ng-repeat="answer in qvCtrl.answers">
+            <label class="item item-checkbox item-text-wrap" ng-repeat="answer in qvCtrl.answers">
                 <label class="checkbox checkbox-balanced" ng-show="qvCtrl.isAnswered"
                        ng-if="qvCtrl.isCorrect[$index]">
                     <input type="checkbox" ng-checked="qvCtrl.checked[$index]">
@@ -28,7 +23,6 @@
                 </label>
         </ion-list>
 
-        <div class="bar-footer">
             <div ng-hide="qvCtrl.isAnswered">
                 <button class="button button-energized button-block icon-right ion-android-lightbulb"
                         ng-click="qvCtrl.check()">Prüfen
@@ -39,6 +33,5 @@
                         ng-click="qvCtrl.nextQuestion()">Nächste Frage
                 </button>
             </div>
-        </div>
     </ion-content>
 </ion-view>

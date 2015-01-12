@@ -8,12 +8,12 @@
     <ion-content class="content has-header">
 
     <div class="spacer" style="display: inline-block; width: 300px; height: 30px;"></div>
-        <div class="text-center">
+        <div class="text-center item-text-wrap">
             <p ng-bind="dvCtrl.question" style="font-size: 30px; font-family: 'Architects Daughter'"></p>
         </div>
 
-        <ion-list class="list">
-            <ion-item class="item" ng-repeat="answers in dvCtrl.answers">
+        <ion-list class="list item-text-wrap">
+            <ion-item class="item item-text-wrap" ng-repeat="answers in dvCtrl.answers">
                 <span style="color: green" ng-if="dvCtrl.isCorrect[$index]">
                 {{answers}}</span>
                 <span style="color: red" ng-if="!dvCtrl.isCorrect[$index]">

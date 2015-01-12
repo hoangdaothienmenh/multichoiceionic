@@ -133,9 +133,10 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
             return true;
         };
 
-        /**
+
+        /*
          * Zeigt ein Alert-Fenster mit einer Statistik über alle Lernrunden.
-         */
+
         this.showAllStats = function () {
             var stats = ModuleData.getStatsForModule(module.moduleID);
             var percent = stats.questions_answered == 0 ? 0 :
@@ -147,6 +148,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                 ' (' + percent + '%)'
             });
         };
+         */
 
         /**
          * Shuffle an array.

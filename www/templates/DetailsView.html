@@ -11,8 +11,8 @@
             </label>
         </div>
 
-        <ion-list class="list">
-            <ion-item class="item"
+        <ion-list class="list item-text-wrap">
+            <ion-item class="item item-text-wrap" style=""
                       ng-repeat="q in filteredQuestions =  (dvCtrl.questions | filter:dvCtrl.searchQuery | orderBy:question)"
                       ng-click="dvCtrl.showQuestion(q)">
                 {{q.question}}
