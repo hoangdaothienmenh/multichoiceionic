@@ -96,7 +96,7 @@ angular.module('mctrainer').service('ModuleData',
         };
 
         /**
-         * Ein Modul anhand des Namens finden
+         * Ein User-Modul anhand des Namens finden
          *
          * @param name Name des Moduls
          */

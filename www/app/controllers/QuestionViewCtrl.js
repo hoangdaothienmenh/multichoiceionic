@@ -7,14 +7,15 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
         var answeredCounter = stats.questions[index];
         var answeredQuestions = 1;
         var failedAnswers = 0;
-        while (answeredCounter >= 1) {
+
+        while (answeredCounter >= 6) { // While Frage gemeistert do index++ bis ungemeisterte Frage kommt
             index++;
             answeredCounter = stats.questions[index];
         }
         $timeout(function () {
             var nr = index + 1;
             $ionicNavBarDelegate.title($stateParams.name + " " + nr + "/" + module.questions.length);
-        }, 600);
+        }, 500);
         this.question = module.questions[index].question;  // Anzeige der Frage
         this.answers = shuffle(Object.keys(module.questions[index].answers)); //Array der Antworten
         this.checked = {};  // Var zum Setzen der Checkbox-Haken
