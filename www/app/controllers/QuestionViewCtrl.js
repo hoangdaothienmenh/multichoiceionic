@@ -2,13 +2,14 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
     function ($scope, $timeout, $ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
         var that = this;
         var index = 0;
+        var maxCounter = 2; // Variable die festlegt wie oft eine Frage beantwortet wird bis sie als gemeistert gilt
         var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
         var stats = ModuleData.getStatsForModule(module.moduleID);
         var answeredCounter = stats.questions[index];
         var answeredQuestions = 1;
         var failedAnswers = 0;
 
-        while (answeredCounter >= 6) { // While Frage gemeistert do index++ bis ungemeisterte Frage kommt
+        while (answeredCounter >= maxCounter) { // While Frage gemeistert do index++ bis ungemeisterte Frage kommt
             index++;
             answeredCounter = stats.questions[index];
         }
@@ -74,7 +75,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
             answeredCounter = stats.questions[index];
 
             //Vorgang von oben wird wiederholt bis nicht gemeisterte Frage kommt
-            while (answeredCounter >= 1) {
+            while (answeredCounter >= maxCounter) {
                 index++;
                 answeredCounter = stats.questions[index];
             }
