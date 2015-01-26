@@ -106,7 +106,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
             } else { // andernfalls nächste Frage initialisieren
                 answeredQuestions++;
                 var nr = index + 1;
-                $ionicNavBarDelegate.title($stateParams.name + " Frage " + nr + "/" + module.questions.length);
+                $ionicNavBarDelegate.title($stateParams.name + " " + nr + "/" + module.questions.length);
                 that.question = module.questions[index].question;  // Anzeige der Frage
                 that.answers = Object.keys(module.questions[index].answers); //Array der Antworten
                 that.checked = {};  // Var zum Setzen der Haken der Checkboxen

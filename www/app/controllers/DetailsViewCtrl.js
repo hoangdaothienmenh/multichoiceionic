@@ -53,7 +53,7 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($timeout, $i
                     value: stats.questions.length - questionsMastered,
                     color: "#85898C",
                     highlight: "#A9ADAA"
-                }, {value: questionsMastered, color: "#46BFBD", highlight: "#5AD3D1", label: "Gemeistert"}];
+                }, {value: questionsMastered, color: "#46BFBD", highlight: "#5AD3D1", label: "Gemeistert "}];
             }
 
 
