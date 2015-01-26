@@ -7,6 +7,7 @@ angular.module('mctrainer').controller('ModulesListCtrl',
             template: 'Loading...'
         });
         $timeout(function () {
+            $ionicNavBarDelegate.title("Home");
             $ionicLoading.hide();
         }, 500);
         that.modules = ModuleData.getUserModules();

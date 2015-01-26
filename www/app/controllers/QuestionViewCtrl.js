@@ -89,7 +89,8 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                         template: 'Du hast alle Fragen gemeistert. Dein Zähler wurde zurückgesetzt.'
                     }).then(function () {
                         ModuleData.resetStats(true, module.moduleID);
-                        $ionicHistory.goBack();
+                        $ionicNavBarDelegate.title("Home");
+                        $state.go('modules');
                     });
                 } else {
                     // wenn nicht alle Fragen gemeistert ->
@@ -100,6 +101,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                         'Richtig beantwortet: ' + rightAnswers +
                         ' (' + quote + '%)'
                     }).then(function () {
+                        $ionicNavBarDelegate.title("Home");
                         $state.go('modules');
                     });
                 }
