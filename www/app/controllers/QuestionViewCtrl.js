@@ -100,7 +100,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
                         'Richtig beantwortet: ' + rightAnswers +
                         ' (' + quote + '%)'
                     }).then(function () {
-                        $ionicHistory.goBack();
+                        $state.go('modules');
                     });
                 }
             } else { // andernfalls nächste Frage initialisieren
@@ -128,7 +128,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
          */
         this.checkWhetherMastered = function () {
             for (var i = 0; i < stats.questions.length; i++) {
-                if (stats.questions[i] < 1) {
+                if (stats.questions[i] < maxCounter) {
                     return false;
                 }
             }
