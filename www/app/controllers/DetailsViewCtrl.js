@@ -21,7 +21,7 @@ angular.module('mctrainer').controller('DetailsViewCtrl', function ($timeout, $i
 
     this.showStats = function () {
         var questionsMastered = 0;
-        var maxCounter = 2;
+        var maxCounter = 6;
         if (stats.questions_answered == 0) {
             $ionicPopup.alert({ // Benutzer hinweisen - Alle Zähler zurücksetzen
                 title: 'Keine Fragen beantwortet!',

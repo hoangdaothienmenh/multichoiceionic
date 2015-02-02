@@ -2,7 +2,7 @@ angular.module('mctrainer').controller('QuestionViewCtrl',
     function ($scope, $timeout, $ionicHistory, $stateParams, $ionicPopup, $state, $ionicNavBarDelegate, ModuleData) {
         var that = this;
         var index = 0;
-        var maxCounter = 2; // Variable die festlegt wie oft eine Frage beantwortet wird bis sie als gemeistert gilt
+        var maxCounter = 6; // Variable die festlegt wie oft eine Frage beantwortet wird bis sie als gemeistert gilt
         var module = ModuleData.findByName($stateParams.name); // Objekt der Fragen mit deren Antworten.
         var stats = ModuleData.getStatsForModule(module.moduleID);
         var answeredCounter = stats.questions[index];
